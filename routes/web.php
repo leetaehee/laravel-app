@@ -14,5 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $a = 1;
+    $b = 2;
+    $c = 3;
+
+    $d = ($a + $b) - 1;
+
+    echo $d;
+
+    echo "라라벨 테스트.. git에 제대로 올라갔는지.. pull 하시는분은 삭제바랍니다.";
     return view('welcome');
 });
