@@ -22,8 +22,8 @@ Route::get('/', function () {
 
     echo $d . "<br>";
 
-    echo env('APP_NAME') . "<br>";
 
+    echo env('APP_NAME') . "<br>";
     echo config('app.url') . "<br>";
 
     echo "라라벨 테스트.. git에 제대로 올라갔는지.. pull 하시는분은 삭제바랍니다.";
