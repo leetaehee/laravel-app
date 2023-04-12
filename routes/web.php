@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     debug('라라벨 디버그바 설치..');
+
     Debugbar::info("[info] 라라벨 디버그바");
     Debugbar::error("[error] 라라벨 디버그바");
+
+    Log::debug("[debug] 파일로 로그 남기기..");
+
     return view('welcome');
 });
