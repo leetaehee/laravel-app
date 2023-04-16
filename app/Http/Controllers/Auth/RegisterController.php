@@ -32,7 +32,7 @@ class RegisterController extends Controller
          * 'required|min:8|max:255'
          *
          * 2. 정규식
-         * |을 못읽는 문제가 생겨서.. 배열로 던질것
+         * 파이프(|)을 못읽는 문제가 생겨서.. 배열로 던질것
          * ['regex:/[a-z]/', 'regex:/[A-z]/', 'regex:/[0-9]/', 'regex:/_|[^\w]/']
          *
          * 3. 패스워드 클래스
