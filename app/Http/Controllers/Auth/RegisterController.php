@@ -61,7 +61,5 @@ class RegisterController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
-        $validated = $validator->validated();
     }
 }
