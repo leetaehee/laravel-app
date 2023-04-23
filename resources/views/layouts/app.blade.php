@@ -18,6 +18,7 @@
                 </ul>
             @endforeach
         @endif
+
         <main>@yield('content')</main>
     </body>
 </html>
