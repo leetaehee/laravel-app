@@ -12,29 +12,30 @@ class RegisterControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnRegisterView()
+    public function testReturnsRegisterView(): void
     {
         $this->get(route('register'))
             ->assertOk()
             ->assertViewIs('auth.register');
     }
 
-    public function testUserRegistration()
+    public function testUserRegistration(): void
     {
         Event::fake();
 
-        $email = $this->faker->safeEmail;
+        $email = $this->faker->safeEmail();
 
         $this->post(route('register'), [
-           'name' => $this->faker->name,
-           'email' => $email,
-           'password' => 'password',
-        ])->assertRedirect(
-            route('verification.notice')
-        );
+            'name' => $this->faker->name(),
+            'email' => $email,
+            'password' => 'password',
+        ])
+            ->assertRedirect(
+                route('verification.notice')
+            );
 
         $this->assertDatabaseHas('users', [
-           'email' => $email,
+            'email' => $email,
         ]);
 
         $this->assertAuthenticated();
