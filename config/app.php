@@ -198,6 +198,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\PasswordServiceProvider::class,
+        App\Providers\SessionServiceProvider::class,
 
     ],
 
