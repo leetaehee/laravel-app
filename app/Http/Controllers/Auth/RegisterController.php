@@ -26,8 +26,6 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        auth()->login($user);
-
         event(new Registered($user));
 
         return to_route('verification.notice');
