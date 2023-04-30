@@ -22,10 +22,11 @@ class RegisterController extends Controller
     public function register(RegisterUserRequest $request)
     {
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            ...$request->validated(),
             'password' => Hash::make($request->password),
         ]);
+
+        auth()->login($user);
 
         event(new Registered($user));
 
