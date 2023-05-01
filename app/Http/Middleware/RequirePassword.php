@@ -8,6 +8,6 @@ class RequirePassword extends Middleware
 {
     protected function shouldConfirmPassword($request, $passwordTimeoutSeconds = null)
     {
-        return session()->socialiteMssingAll() &&  parent::shouldConfirmPassword($request, $passwordTimeoutSeconds);
+        return session()->socialiteMissingAll() &&  parent::shouldConfirmPassword($request, $passwordTimeoutSeconds);
     }
 }
