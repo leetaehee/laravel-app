@@ -199,7 +199,7 @@ return [
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\PasswordServiceProvider::class,
         App\Providers\SessionServiceProvider::class,
-
+        App\Providers\PaginateServiceProvider::class,
     ],
 
     /*

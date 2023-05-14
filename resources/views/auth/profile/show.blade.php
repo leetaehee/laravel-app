@@ -10,4 +10,9 @@
 
         <button type="submit">개인정보 변경하기</button>
     </form>
+
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit">로그아웃</button>
+    </form>
 @endsection
