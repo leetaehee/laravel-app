@@ -8,6 +8,11 @@ use App\Models\Blog;
 
 class BlogController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Blog::class, 'blog');
+    }
+
     /**
      * Display a listing of the resource.
      */
