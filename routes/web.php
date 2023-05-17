@@ -14,3 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('blogs', \App\Http\Controllers\BlogController::class);
+
+Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function() {
+    Route::post('subscribe', 'subscribe')
+        ->name('subscribe');
+    Route::post('unsubscribe', 'unsubscribe')
+       ->name('unsubscribe');
+});
