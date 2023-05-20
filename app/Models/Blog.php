@@ -24,6 +24,11 @@ class Blog extends Model
             ->as('subscription');
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'name';
