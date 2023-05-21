@@ -29,6 +29,12 @@ class Blog extends Model
         return $this->hasMany(Post::class);
     }
 
+    public function comments()
+    {
+        return $this->hasManyThrough(Comment::class, Post::class, secondKey: 'commentable_id')
+            ->where('commentable_type', Post::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'name';
