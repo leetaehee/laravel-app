@@ -53,6 +53,7 @@ class BlogController extends Controller
 
         return view('blogs.show', [
             'blog' => $blog,
+            'posts' => $blog->posts()->latest()->paginate(5),
             'owned' => $user->blogs()->find($blog->id),
             'subscribed' => $blog->subscribers()->find($user->id)
         ]);

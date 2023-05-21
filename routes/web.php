@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('blogs', \App\Http\Controllers\BlogController::class);
 
+Route::resource('blogs.posts', \App\Http\Controllers\PostController::class)
+    ->shallow();
+
 Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function() {
     Route::post('subscribe', 'subscribe')
         ->name('subscribe');
