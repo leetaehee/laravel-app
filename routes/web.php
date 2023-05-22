@@ -22,6 +22,10 @@ Route::resource('posts.comments', \App\Http\Controllers\CommentController::class
     ->shallow()
     ->only(['store', 'update', 'destroy']);
 
+Route::resource('posts.attachments', \App\Http\Controllers\AttachmentController::class)
+    ->shallow()
+    ->only(['store', 'destroy']);
+
 Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function() {
     Route::post('subscribe', 'subscribe')
         ->name('subscribe');
