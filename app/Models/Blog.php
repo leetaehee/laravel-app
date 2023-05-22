@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Collections\BlogCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
@@ -38,5 +39,10 @@ class Blog extends Model
     public function getRouteKeyName()
     {
         return 'name';
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new BlogCollection($models);
     }
 }

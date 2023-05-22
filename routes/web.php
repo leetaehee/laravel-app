@@ -26,6 +26,8 @@ Route::resource('posts.attachments', \App\Http\Controllers\AttachmentController:
     ->shallow()
     ->only(['store', 'destroy']);
 
+Route::get('/', \App\Http\Controllers\WelcomeController::class);
+
 Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function() {
     Route::post('subscribe', 'subscribe')
         ->name('subscribe');
