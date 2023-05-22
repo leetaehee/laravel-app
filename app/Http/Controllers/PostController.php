@@ -6,9 +6,19 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Blog;
 use App\Models\Post;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post', [
+            'except' => ['create', 'store']
+        ]);
+
+        $this->middleware('can:create, App\Models\Post,blog')
+            ->only(['create', 'store']);
+    }
     /**
      * Display a listing of the resource.
      */

@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Attachment::class, 'attachment', [
+            'expect' => ['store'],
+        ]);
+
+        $this->middleware('can:create,App\Models\Attachment,post')
+            ->only('store');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +37,7 @@ class AttachmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAttachmentRequest $request, Post $post)
+    public function store($request, Post $post)
     {
         foreach ($request->file('attachments') as $attachment) {
             $attachment->storePublicly('attachments', 'public');

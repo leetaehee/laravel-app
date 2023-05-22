@@ -3,17 +3,21 @@
 namespace App\Policies;
 
 use App\Models\Attachment;
+use App\Models\Post;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class AttachmentPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,15 +25,15 @@ class AttachmentPolicy
      */
     public function view(User $user, Attachment $attachment): bool
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, Post $post): bool
     {
-        //
+        return $user->id === $post->blog->user_id;
     }
 
     /**
@@ -37,7 +41,7 @@ class AttachmentPolicy
      */
     public function update(User $user, Attachment $attachment): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +49,7 @@ class AttachmentPolicy
      */
     public function delete(User $user, Attachment $attachment): bool
     {
-        //
+        return $user->id === $attachment->post->blog->user_id;
     }
 
     /**
@@ -53,7 +57,7 @@ class AttachmentPolicy
      */
     public function restore(User $user, Attachment $attachment): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +65,6 @@ class AttachmentPolicy
      */
     public function forceDelete(User $user, Attachment $attachment): bool
     {
-        //
+        return true;
     }
 }
