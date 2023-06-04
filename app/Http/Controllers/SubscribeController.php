@@ -6,6 +6,8 @@ use App\Http\Requests\SubscribeRequest;
 use App\Http\Requests\UnsubscribeRequest;
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Subscribed as SubscribedMailable;
 
 class SubscribeController extends Controller
 {
@@ -16,7 +18,11 @@ class SubscribeController extends Controller
 
         $user->subscriptions()->attach($blog->id);
 
-        evnet(new Subscribed($user, $blog));
+        Mail::to($blog->user)
+            ->send(
+                (new SubscribedMailable($user, $blog))
+                    ->onQueue('emails')
+            );
 
         return back();
     }
