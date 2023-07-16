@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Subscribed as SubscribedMailable;
 
 use App\Notifications\Subscribed as SubscribedNotification;
+use App\Events\Subscribed;
 
 class SubscribeController extends Controller
 {
-    public function subscribe(SubscribeRequest $request)
+    public function subscribe(SubscribeRequest $request, Blog $blog)
     {
         $user = $request->user();
         $blog =  Blog::find($request->blog_id);
@@ -21,15 +22,19 @@ class SubscribeController extends Controller
         $user->subscriptions()->attach($blog->id);
 
         // 메일
+        /*
         Mail::to($blog->user)
             ->send(
                 (new SubscribedMailable($user, $blog))
                     ->onQueue('emails')
             );
-
+        */
 
         // 알림
         //$blog->user->notify(new SubscribedNotification($user, $blog));
+
+        // 이벤트
+        event(new Subscribed($user, $blog));
 
         return back();
     }

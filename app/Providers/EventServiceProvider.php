@@ -9,6 +9,9 @@ use App\Observers\PostObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use App\Events\Subscribed;
+use App\Listeners\SendSubscriptionNotification;
+use App\Listeners\SendPublishedNotification;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,6 +23,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        Subscribed::class => [
+            SendSubscriptionNotification::class,
+        ],
+        Published::class => [
+            SendPublishedNotification::class
         ],
     ];
 
