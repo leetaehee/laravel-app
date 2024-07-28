@@ -14,11 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $a = 3;
-    $b = 4;
-    $c = $a + $b;
-
-    echo $c;
-
     return view('welcome');
 });
