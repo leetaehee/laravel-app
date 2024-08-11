@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
@@ -18,9 +21,42 @@ class UserController extends Controller
     /*
      * 작성 화면
      */
-    public function create()
+    public function create(Request $request)
     {
         Log::info('글 작성 화면에 진입했습니다.');
+
+        /*
+        $user = User::create([
+            'user_id' => 'lastride25',
+            'password' => 'ceman08079#',
+            'name' => '이태희',
+            'email' => 'lastride25@naver.com',
+            'phone' => '01027891039',
+            'gender' => 'W',
+            'ip_address' =>  $request->ip(),
+            'create_datetime' => Carbon::now(),
+        ]);
+        */
+
+        $user = User::where('idx', 1);
+
+        //삭제
+        //$user->delete();
+
+        // 소프트 삭제 된 항목도 함께 나옴
+        //$exists = User::withTrashed()->where('idx', 1)->get();
+
+        // 소프트 삭제 된 항목은 안나옴
+        //$exists = User::where('idx', 1)->get();
+
+        // 결과
+        //echo $exists[0]->idx;
+
+        // 복원
+        //$user->restore();
+
+        // 완전삭제
+        //$user->forceDelete();
 
         echo '글 작성 화면';
     }
