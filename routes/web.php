@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // 라라벨 인덱스
+    echo date('Y-m-d H:i:s');
     return view('welcome');
 });
 

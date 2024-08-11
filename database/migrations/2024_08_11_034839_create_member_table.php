@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone', 11)->comment('핸드폰');
             $table->char('gender', 1)->default('M')->comment('성별 - 남: M, 여: W');
             $table->ipAddress('ip_address')->comment('아이피 주소');
-            $table->tinyText('memo')->comment('특이사항');
+            $table->tinyText('memo')->nullable()->comment('특이사항');
             $table->dateTime('create_datetime')->comment('가입시각');
             $table->timestamp('update_datetime')->nullable()->comment('수정시각');
             $table->softDeletes('delete_datetime')->comment('탈퇴시각');
