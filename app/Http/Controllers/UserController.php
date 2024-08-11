@@ -27,11 +27,11 @@ class UserController extends Controller
 
         /*
         $user = User::create([
-            'user_id' => 'lastride25',
-            'password' => 'ceman08079#',
-            'name' => '이태희',
-            'email' => 'lastride25@naver.com',
-            'phone' => '01027891039',
+            'user_id' => 'hello12',
+            'password' => '12345',
+            'name' => '말티즈',
+            'email' => '12232@naver.com',
+            'phone' => '01012341111',
             'gender' => 'W',
             'ip_address' =>  $request->ip(),
             'create_datetime' => Carbon::now(),
