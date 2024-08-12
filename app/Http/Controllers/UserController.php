@@ -38,7 +38,8 @@ class UserController extends Controller
         ]);
         */
 
-        $user = User::where('idx', 1);
+        // 저장된 유저 엘로퀀트 모델로 가져오기
+        //$user = User::where('idx', 1);
 
         //삭제
         //$user->delete();
