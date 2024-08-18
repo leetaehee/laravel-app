@@ -32,11 +32,11 @@ Route::get('/dashboard', DashboardController::class);
 
 // 유저 정보
 Route::controller(UserController::class)->prefix('users')->group(function () {
-   route::get('/', 'index');
-   route::get('/create', 'create');
-   route::get('/show/{id}', 'show');
-   route::get('/edit/{id}', 'edit');
-   route::post('/store', 'store');
-   route::post('/update/{id}', 'update');
-   route::post('/destroy/{id}', 'destroy');
+   route::get('/', 'index')->name('user.index');
+   route::get('/create', 'create')->name('user.create');
+   route::get('/show/{id}', 'show')->name('user.show');
+   route::get('/edit/{id}', 'edit')->name('user.edit');
+   route::post('/store', 'store')->name('user.store');
+   route::patch('/update/{id}', 'update')->name('user.update');
+   route::delete('/destroy/{id}', 'destroy')->name('user.destroy');
 });
