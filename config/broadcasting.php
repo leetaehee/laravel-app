@@ -44,6 +44,9 @@ return [
                 'useTLS' => env('PUSHER_SCHEME', 'https') === 'https',
             ],
             'client_options' => [
+                'verify' => env('APP_ENV') === 'production' 
+                    ? true  // 프로덕션: 항상 검증
+                    : (PHP_OS_FAMILY === 'Darwin' ? false : true), // 개발: macOS만 비활성화
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
             ],
         ],

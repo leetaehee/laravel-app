@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -40,3 +41,6 @@ Route::controller(UserController::class)->prefix('users')->group(function () {
    route::patch('/update/{id}', 'update')->name('user.update');
    route::delete('/destroy/{id}', 'destroy')->name('user.destroy');
 });
+
+Route::post('/send', [ChatController::class, 'send']);
+Route::view('/chat', 'chat');
