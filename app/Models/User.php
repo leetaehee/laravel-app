@@ -2,64 +2,30 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Authenticatable
+class User extends Base
 {
-    use HasApiTokens, HasFactory, Notifiable, softDeletes;
+    protected $table = 'users';
 
-    protected $table = 'th_member';
-
-    protected $primaryKey = 'idx';
-
-    public $timestamps = false;
-
-    const CREATED_AT = 'create_datetime';
-
-    const UPDATED_AT = 'update_datetime';
-
-    const DELETED_AT = 'delete_datetime';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'user_id',
         'name',
-        'email',
-        'password',
-        'phone',
-        'gender',
-        'memo',
-        'ip_address',
         'create_datetime',
+        'create_user_idx',
         'update_datetime',
+        'update_user_idx',
+        'delete_datetime',
+        'delete_user_idx',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-       // 'password',
-       // 'remember_token',
-    ];
+    public function posts() : HasMany
+    {
+        return $this->hasMany(Post::class, 'user_idx', 'idx');
+    }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        //'email_verified_at' => 'datetime',
-        //'password' => 'hashed',
-    ];
+    public function comments() : HasMany
+    {
+        return $this->hasMany(Comment::class, 'user_idx', 'idx');
+    }
 }

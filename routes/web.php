@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // 라라벨 인덱스
-    echo date('Y-m-d H:i:s');
+    echo date('Y-m-d H:i:s') . "=>" . phpversion();
     return view('welcome');
 });
 
@@ -31,16 +33,35 @@ Route::get('/ip', function(Request $request) {
 // 대시보드 (향후 인덱스 페이지가 될 예정)
 Route::get('/dashboard', DashboardController::class);
 
-// 유저 정보
-Route::controller(UserController::class)->prefix('users')->group(function () {
-   route::get('/', 'index')->name('user.index');
-   route::get('/create', 'create')->name('user.create');
-   route::get('/show/{id}', 'show')->name('user.show');
-   route::get('/edit/{id}', 'edit')->name('user.edit');
-   route::post('/store', 'store')->name('user.store');
-   route::patch('/update/{id}', 'update')->name('user.update');
-   route::delete('/destroy/{id}', 'destroy')->name('user.destroy');
-});
-
 Route::post('/send', [ChatController::class, 'send']);
 Route::view('/chat', 'chat');
+
+Route::prefix("users")->name("users.")->group(function() {
+    Route::get("/", [UserController::class, 'index'])->name('index');
+    Route::get("/create", [UserController::class, 'create'])->name('create');
+    Route::get("/{idx}", [UserController::class, 'show'])->name('show');
+    Route::post("/", [UserController::class, 'store'])->name('store');
+    Route::get("/{idx}/edit", [UserController::class, 'edit'])->name("edit");
+    Route::put("/{idx}", [UserController::class, 'update'])->name('update');
+    Route::patch("/{idx}/soft-delete", [UserController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix("posts")->name("posts.")->group(function() {
+    Route::get("/", [PostController::class, 'index'])->name('index');
+    Route::get("/create", [PostController::class, 'create'])->name('create');
+    Route::get("/{idx}", [PostController::class, 'show'])->name('show');
+    Route::post("/", [PostController::class, 'store'])->name('store');
+    Route::get("/{idx}/edit", [PostController::class, 'edit'])->name("edit");
+    Route::put("/{idx}", [PostController::class, 'update'])->name('update');
+    Route::patch("/{idx}/soft-delete", [PostController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix("comments")->name("comments.")->group(function() {
+    Route::get("/", [CommentController::class, 'index'])->name('index');
+    Route::get("/create", [CommentController::class, 'create'])->name('create');
+    Route::get("/{idx}", [CommentController::class, 'show'])->name('show');
+    Route::post("/", [CommentController::class, 'store'])->name('store');
+    Route::get("/{idx}/edit", [CommentController::class, 'edit'])->name("edit");
+    Route::put("/{idx}", [CommentController::class, 'update'])->name('update');
+    Route::patch("/{idx}/soft-delete", [CommentController::class, 'destroy'])->name('destroy');
+});

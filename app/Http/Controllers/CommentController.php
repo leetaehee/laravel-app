@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 
-use Illuminate\Support\Facades\Log;
-
-class UserController extends Controller
+class CommentController extends Controller
 {
     /**
      * 글 목록
@@ -16,22 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        Log::debug("디버깅", ['page' => 'index', 'step' => '시작']);
-
-        try {
-            Log::info("정보생성", ['user_id' => 'abcd', 'user_key' => '3']);
-
-            throw new \Exception('강제에러발생', 9000);
-
-        } catch(\Throwable $e) {
-            Log::error("에러발생",[
-                'messsage' => $e->getMessage(),
-                'code' => $e->getCode(),
-            ]);
-        }
-
-
-        return view('users.index');
+        return view('comments.index');
     }
 
     /**
@@ -41,7 +23,7 @@ class UserController extends Controller
      */
     public function show()
     {
-        return view('users.show');
+        return view('comments.show');
     }
 
     /**
@@ -51,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('comments.create');
     }
 
     /**
@@ -62,13 +44,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
-            'user_id' => $request->post('user_id'),
-            'name' => $request->post('name'),
-            'create_user_idx' => 99
-        ]);
-
-        return redirect('/users');
     }
 
     /**
@@ -79,7 +54,7 @@ class UserController extends Controller
      */
     public function edit(int $idx)
     {
-        return view('users.edit');
+        return view('comments.edit');
     }
 
     /**
