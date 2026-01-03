@@ -16,6 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        // 라라벨 로그 연습 
+        
         Log::debug("디버깅", ['page' => 'index', 'step' => '시작']);
 
         try {
