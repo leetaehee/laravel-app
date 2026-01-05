@@ -1,0 +1,21 @@
+@media (max-width: 991.98px) {
+    .auth-dropdown .auth-btn,
+    .auth-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .auth-dropdown .dropdown-menu {
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .auth-dropdown .dropdown-menu {
+        right: 0;
+        left: auto;
+    }
+}
+
+.sidebar-panel {
+    background: #3c4147;
+}

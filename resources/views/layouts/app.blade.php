@@ -1,29 +1,65 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>@yield('title', 'Laravel App')</title>
-    <style>
-        body { font-family: Arial; margin: 30px; }
-        header a { margin-right: 10px; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; }
-        th { background: #f4f4f4; }
-        form { display: inline; }
-    </style>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<header>
-    <a href="{{ route('users.index') }}">Users</a>
-    <a href="{{ route('posts.index') }}">Posts</a>
-    <a href="{{ route('comments.index') }}">Comments</a>
-    <hr>
-</header>
+        <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
-<main>
-    @yield('content')
-</main>
+        {{-- 스타일 페이지를 경로를 올려야 하는 경우 <script src=".."></script> --}}
+        {{-- 자식뷰에서 @push('scripts') @endpush --}}
+        @stack('scripts')
+        
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/common.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-</body>
+        {{-- 스타일 페이지를 경로를 올려야 하는 경우 <like rel="stylesheet" href="..." /> --}}
+        {{-- 자식뷰에서 @push('styles') @endpush --}}
+        @stack('styles')
+
+        {{--스타일 단일 페이지 --}}
+        {{-- 자식뷰에서 @section('style') @endsection --}}
+        @yield('style')
+        
+        <title>{{ config('app.name') }} :: @yield('title', '홈')</title>
+    </head>
+    <body>
+        {{-- 레이아웃 헤더 --}}
+        @include('layouts.header')
+
+        {{-- 레이아웃 사이드바 (모바일) --}}
+        @include('layouts.side')
+
+        <div class="container-fluid px-3 px-lg-4 py-4 flex-grow-1">
+            <div class="row g-4">
+                @unless (request()->route('hideSide'))
+                    <aside class="col-lg-3 d-none d-lg-block">
+                        <div class="sidebar-panel text-white rounded-3 p-4 h-100">
+                            <h6 class="text-uppercase text-secondary small">프로그램</h6>
+                            <nav class="nav flex-column gap-2 mt-3">
+                                <a class="nav-link text-white" href="#">릴리즈 노트</a>
+                                <a class="nav-link text-white" href="#">업그레이드 가이드</a>
+                                <a class="nav-link text-white" href="#">가이드</a>
+                                <a class="nav-link text-white" href="#">API 문서</a>
+                                <a class="nav-link text-white" href="#">커뮤니티</a>
+                                <a class="nav-link text-white" href="#">공지사항</a>
+                                <a class="nav-link text-white" href="#">문의하기</a>
+                            </nav>
+                        </div>
+                    </aside>
+                @endunless
+
+                {{-- 본문 컨텐츠 --}}
+                @yield('content')
+            </div>
+        </div>
+
+        {{-- 레이아웃 풋터 --}}
+        @include('layouts.footer')
+        
+        {{-- 스크립트 단일 페이지 --}}
+        @yield('script')
+    </body>
 </html>

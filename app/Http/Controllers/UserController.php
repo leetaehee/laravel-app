@@ -16,23 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        // 라라벨 로그 연습 
+        Log::debug("UserController insdex called");
         
-        Log::debug("디버깅", ['page' => 'index', 'step' => '시작']);
-
-        try {
-            Log::info("정보생성", ['user_id' => 'abcd', 'user_key' => '3']);
-
-            throw new \Exception('강제에러발생', 9000);
-
-        } catch(\Throwable $e) {
-            Log::error("에러발생",[
-                'messsage' => $e->getMessage(),
-                'code' => $e->getCode(),
-            ]);
-        }
-
-
         return view('users.index');
     }
 

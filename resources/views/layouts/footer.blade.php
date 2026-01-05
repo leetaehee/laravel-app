@@ -1,0 +1,23 @@
+<footer class="bg-dark text-secondary py-4">
+    <div class="container-fluid px-3 px-lg-4">
+        <div class="d-flex flex-wrap gap-3 border-bottom border-secondary pb-3 mb-3">
+        <a class="text-white text-decoration-none" href="{{ route('privacy') }}">개인정보처리방침</a>
+        <a class="text-white text-decoration-none" href="{{ route('terms') }}">이용약관</a>
+        </div>
+        <div class="row g-3 align-items-start">
+        <div class="col-12 col-lg-7">
+            <h6 class="text-white mb-2">티이에치스터디그룹</h6>
+            <div class="text-white-50 small">
+            <div>관리자 : 이태희</div>
+            <div>긴급연락처 : 010-2789-1039</div>
+            <div>대표전화 : 031-494-4157</div>
+            <div>이메일 : ceman08071039@gmail.com</div>
+            <div>주소 : 경기도 안산시 단원구 시화호수로 633 마리나큐브오피스텔 909호</div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-5 text-center text-lg-end mt-2 mt-lg-0">
+            <div class="text-white-50 small">© 2024 티이에치스터디그룹. All rights reserved.</div>
+        </div>
+        </div>
+    </div>
+</footer>

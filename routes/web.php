@@ -21,20 +21,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // 라라벨 인덱스
-    echo date('Y-m-d H:i:s') . "=>" . phpversion();
-    return view('welcome');
-});
-
-Route::get('/ip', function(Request $request) {
-   // 아이피 확인하기
-    echo "ip = " . $request->ip();
+    return view('home');
 });
 
 // 대시보드 (향후 인덱스 페이지가 될 예정)
 Route::get('/dashboard', DashboardController::class);
 
-Route::post('/send', [ChatController::class, 'send']);
-Route::view('/chat', 'chat');
+// sidebar 없는 정적 페이지들
+Route::group([], function() {
+    Route::view('/privacy-policy', 'privacy')
+        ->name('privacy')
+        ->defaults('hideSide', true);
+    Route::view('/terms-of-service', 'terms')
+        ->name('terms')
+        ->defaults('hideSide', true);
+});
 
 Route::prefix("users")->name("users.")->group(function() {
     Route::get("/", [UserController::class, 'index'])->name('index');
@@ -65,3 +66,6 @@ Route::prefix("comments")->name("comments.")->group(function() {
     Route::put("/{idx}", [CommentController::class, 'update'])->name('update');
     Route::patch("/{idx}/soft-delete", [CommentController::class, 'destroy'])->name('destroy');
 });
+
+Route::post('/send', [ChatController::class, 'send']);
+Route::view('/chat', 'chat');
