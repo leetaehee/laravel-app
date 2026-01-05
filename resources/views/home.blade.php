@@ -107,11 +107,3 @@
     </section>
   </main>
 @endsection
-
-@section('script')
-  <script>
-    $(function() {
-        alert("ok!!");
-    });
-  </script>
-@endsection

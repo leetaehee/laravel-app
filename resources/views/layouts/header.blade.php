@@ -1,7 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container-fluid px-3 px-lg-4">
         <div class="d-flex align-items-center w-100 d-lg-none">
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar" aria-label="Toggle sidebar">
+        <button 
+            class="navbar-toggler border-0" 
+            type="button"
+            @unless (request()->route('hideSide'))
+                data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar"
+            @endunless
+            aria-label="Toggle sidebar">
             <span class="navbar-toggler-icon"></span>
         </button>
         <span class="navbar-brand fw-semibold mx-auto mb-0">{{ config('app.name') }}</span>
