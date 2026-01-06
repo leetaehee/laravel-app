@@ -4,16 +4,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        {{-- 공통 및 외부 라이브러리 스크립트 --}}
+        @include('partials.head-scripts')
 
         {{-- 스타일 페이지를 경로를 올려야 하는 경우 <script src=".."></script> --}}
         {{-- 자식뷰에서 @push('scripts') @endpush --}}
         @stack('scripts')
         
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-        <link href="{{ asset('css/common.css') }}" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        {{-- 공통 및 외부 라이브러리 스타일 --}}
+        @include('partials.head-styles')
 
         {{-- 스타일 페이지를 경로를 올려야 하는 경우 <like rel="stylesheet" href="..." /> --}}
         {{-- 자식뷰에서 @push('styles') @endpush --}}
