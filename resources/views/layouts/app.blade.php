@@ -34,17 +34,13 @@
         <div class="container-fluid px-3 px-lg-4 py-4 flex-grow-1">
             <div class="row g-4">
                 @unless (request()->route('hideSide'))
-                    <aside class="col-lg-3 d-none d-lg-block">
+                    <aside class="col-lg-2 sidebar-col d-none d-lg-block">
                         <div class="sidebar-panel text-white rounded-3 p-4 h-100">
                             <h6 class="text-uppercase text-secondary small">프로그램</h6>
                             <nav class="nav flex-column gap-2 mt-3">
-                                <a class="nav-link text-white" href="#">릴리즈 노트</a>
-                                <a class="nav-link text-white" href="#">업그레이드 가이드</a>
-                                <a class="nav-link text-white" href="#">가이드</a>
-                                <a class="nav-link text-white" href="#">API 문서</a>
-                                <a class="nav-link text-white" href="#">커뮤니티</a>
-                                <a class="nav-link text-white" href="#">공지사항</a>
-                                <a class="nav-link text-white" href="#">문의하기</a>
+                                @foreach($sideMenus as $menu)
+                                    <a class="nav-link text-white" href="{{ $menu['url'] }} ">{{ $menu['title'] }}</a>
+                                @endforeach
                             </nav>
                         </div>
                     </aside>

@@ -22,7 +22,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     // 라라벨 인덱스
     return view('home');
-});
+})->name('home')->defaults('hideSide', true);
+
+Route::get('/login', function() {
+    // 로그인
+    return view('users.login');
+})->name('login')->defaults('hideSide', true);
+
+Route::get('/join', function() {
+    // 회원가입 
+    return view('users.join');
+})->name('join')->defaults('hideSide', true);
 
 // 대시보드 (향후 인덱스 페이지가 될 예정)
 Route::get('/dashboard', DashboardController::class);
@@ -65,6 +75,41 @@ Route::prefix("comments")->name("comments.")->group(function() {
     Route::get("/{idx}/edit", [CommentController::class, 'edit'])->name("edit");
     Route::put("/{idx}", [CommentController::class, 'update'])->name('update');
     Route::patch("/{idx}/soft-delete", [CommentController::class, 'destroy'])->name('destroy');
+});
+
+// 사진 라우팅
+Route::prefix('photo')->name('photo.')->group(function () {
+    Route::get('/{slug?}', function ($slug = null) {
+        return view('photo.index');
+    })->name('index');
+});
+
+// 영상 라우팅
+Route::prefix('video')->name('video.')->group(function () {
+    Route::get('/{slug?}', function ($slug = null) {
+        return view('video.index');
+    })->name('index');
+});
+
+// 정보 라우팅
+Route::prefix('blog')->name('blog.')->group(function () {
+    Route::get('/{slug?}', function ($slug = null) {
+        return view('blog.index');
+    })->name('index');
+});
+
+// 장소 라우팅
+Route::prefix('map')->name('map.')->group(function () {
+    Route::get('/{slug?}', function ($slug = null) {
+        return view('map.index');
+    })->name('index');
+});
+
+// 장소 라우팅
+Route::prefix('document')->name('document.')->group(function () {
+    Route::get('/{slug?}', function ($slug = null) {
+        return view('document.index');
+    })->name('index');
 });
 
 Route::post('/send', [ChatController::class, 'send']);

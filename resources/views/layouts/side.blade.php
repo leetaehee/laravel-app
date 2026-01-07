@@ -5,11 +5,9 @@
     </div>
     <div class="offcanvas-body">
         <nav class="nav flex-column gap-2">
-        <a class="nav-link text-white" href="#">릴리즈 노트</a>
-        <a class="nav-link text-white" href="#">가이드</a>
-        <a class="nav-link text-white" href="#">API 문서</a>
-        <a class="nav-link text-white" href="#">시작하기</a>
-        <a class="nav-link text-white" href="#">커뮤니티</a>
+            @foreach($sideMenus as $menu)
+                <a class="nav-link text-white" href="{{ $menu['url'] }}">{{ $menu['title'] }}</a>
+            @endforeach
         </nav>
     </div>
 </div>

@@ -3,7 +3,7 @@
 @section('title', '홈')
 
 @section('content')
-  <main class="col-lg-9">
+  <main class="col-12">
     <section class="bg-white p-4 p-lg-5 rounded-3 shadow-sm">
       <h1 class="display-6 fw-semibold">라라벨 한국어 매뉴얼</h1>
       <p class="text-secondary mb-4">헤더, 사이드바, 본문, 푸터 레이아웃만 잡은 반응형 샘플입니다.</p>
