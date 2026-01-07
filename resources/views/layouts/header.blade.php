@@ -22,11 +22,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         </div>
-        @if (request()->route('hideSide'))
-            <a class="d-none d-lg-inline-flex align-items-center text-decoration-none me-3 text-white" href="{{ config('app.url') }}" aria-label="Go to home">
-                <i class="bi bi-house-door-fill fs-5" aria-hidden="true"></i>
-            </a>
-        @endif
+        <a class="d-none d-lg-inline-flex align-items-center text-decoration-none me-3 text-white" href="{{ config('app.url') }}" aria-label="Go to home">
+            <i class="bi bi-house-door-fill fs-5" aria-hidden="true"></i>
+        </a>
         <a class="navbar-brand fw-semibold d-none d-lg-inline-flex text-decoration-none" href="{{ config('app.url') }}">{{ config('app.name') }}</a>
         <div class="collapse navbar-collapse mt-3 mt-lg-0" id="topNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
