@@ -52,7 +52,7 @@
         <!-- 로그인 -->
         <div class="dropdown auth-dropdown">
             <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center auth-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-box-arrow-in-right me-1" aria-hidden="true"></i>로그인
+            <i class="bi bi-box-arrow-in-right me-1" aria-hidden="true"></i>Start
             </button>
             <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right me-2" aria-hidden="true"></i>로그인</a></li>
