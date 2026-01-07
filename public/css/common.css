@@ -38,11 +38,6 @@
     background: #3c4147;
 }
 
-html,
-body {
-    height: 100%;
-}
-
 body {
     min-height: 100vh;
     display: flex;
@@ -56,4 +51,10 @@ body > .container-fluid {
 
 footer {
     margin-top: auto;
+}
+
+.navbar.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
 }
