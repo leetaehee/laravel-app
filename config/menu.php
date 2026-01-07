@@ -79,7 +79,7 @@ return [
             'url'   => '/document/study',
         ],
         'laravel' => [
-            'title' => '라라벨문서',
+            'title' => '라라벨',
             'url'   => '/document/laravel',
         ],
         
