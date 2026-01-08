@@ -31,7 +31,10 @@
                                     <input class="form-check-input" type="checkbox" id="remember">
                                     <label class="form-check-label" for="remember">자동로그인</label>
                                 </div>
-                                <a href="#" class="link-primary small text-decoration-none">계정찾기</a>
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="{{ route('join') }}" class="link-primary small text-decoration-none">회원가입</a>
+                                    <a href="#" class="link-primary small text-decoration-none">계정찾기</a>
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-dark border-0 w-100">로그인</button>
