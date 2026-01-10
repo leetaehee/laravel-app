@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Users\UserService;
+use App\Http\Requests\Users\RegisterUserRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -53,49 +52,10 @@ class UserController extends Controller
      * @param Request $request
      * @return void
      */
-    public function register(Request $request)
+    public function register(RegisterUserRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => ['required', 'email:rfc', 'max:80', 'unique:users,email', 'regex:/^[A-Z0-9._%+\\-]+@[A-Z0-9.\\-]+\\.[A-Z]{2,}$/i'],
-            'password' => ['required', 'min:8', 'max:15', 'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).+$/'],
-            'password_confirm' => ['required', 'same:password'],
-            'name' => ['required', 'min:2', 'max:8'],
-            'nick_name' => ['required', 'min:2', 'max:10'],
-            'birth_date' => ['required', 'date_format:Y-m-d'],
-            'sex' => ['required', 'in:M,W'],
-            'phone' => ['required', 'digits_between:10,11', 'regex:/^(010|011|016|017|018|019)\d{7,8}$/', 'unique:users,phone'],
-            'address' => ['required', 'min:5', 'max:30'],
-            'personal_info_agree' => ['required', 'in:Y'],
-            'marketing_info_agree' => ['nullable', 'in:Y,N'],
-        ]);
-
-        if ($validator->fails()) {
-            Log::info('User register validation failed', [
-                'action' => 'validate',
-                'model' => 'User',
-                'email' => $request->input('email'),
-                'ip' => $request->ip(),
-                'errors' => $validator->errors()->toArray(),
-            ]);
-
-            return redirect('/users/register')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         // 디비에 들어가는 값만 필터링 
-        $payload = $request->only([
-            'email',
-            'password',
-            'name',
-            'nick_name',
-            'birth_date',
-            'sex',
-            'phone',
-            'address',
-            'personal_info_agree',
-            'marketing_info_agree',
-        ]);
+        $payload = $request->safe()->except(['password_confirm']);
 
         $this->userService->register($payload, $request->ip());
 

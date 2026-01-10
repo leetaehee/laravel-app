@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Http\Requests\Users;
+
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Log;
+
+class RegisterUserRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'email' => [
+                'required',
+                'email:rfc',
+                'max:80',
+                'unique:users,email',
+                'regex:/^[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}$/i',
+            ],
+            'password' => [
+                'required',
+                'min:8',
+                'max:15',
+                'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/',
+            ],
+            'password_confirm' => ['required', 'same:password'],
+            'name' => ['required', 'min:2', 'max:8'],
+            'nick_name' => ['required', 'min:2', 'max:10'],
+            'birth_date' => ['required', 'date_format:Y-m-d'],
+            'sex' => ['required', 'in:M,W'],
+            'phone' => [
+                'required',
+                'digits_between:10,11',
+                'regex:/^(010|011|016|017|018|019)\d{7,8}$/',
+                'unique:users,phone',
+            ],
+            'address' => ['required', 'min:5', 'max:30'],
+            'personal_info_agree' => ['required', 'in:Y'],
+            'marketing_info_agree' => ['nullable', 'in:Y,N'],
+        ];
+    }
+
+    protected function failedValidation(Validator $validator): void
+    {
+        Log::info('User register validation failed', [
+            'action' => 'validate',
+            'model' => 'User',
+            'email' => $this->input('email'),
+            'ip' => $this->ip(),
+            'errors' => $validator->errors()->toArray(),
+        ]);
+
+        throw new HttpResponseException(
+            redirect('/users/register')->withErrors($validator)->withInput()
+        );
+    }
+}
