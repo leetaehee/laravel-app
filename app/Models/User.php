@@ -47,6 +47,10 @@ class User extends Authenticatable
         'delete_user_idx',
     ];
 
+    protected $casts = [
+        'password' => 'hashed', // 라라벨 10 이상에서 지원하는 해시드 캐스트 
+    ];
+
     protected $hidden = [
         'password',
     ];

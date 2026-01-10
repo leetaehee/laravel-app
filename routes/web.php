@@ -4,7 +4,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Users\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,11 +24,6 @@ Route::get('/', function () {
     return view('home');
 })->name('home')->defaults('hideSide', true);
 
-//Route::get('/join', function() {
-//    // 회원가입 
-//    return view('users.join');
-//})->name('join')->defaults('hideSide', true);
-
 // 대시보드 (향후 인덱스 페이지가 될 예정)
 Route::get('/dashboard', DashboardController::class);
 
@@ -43,13 +38,13 @@ Route::group([], function() {
 });
 
 Route::prefix("users")->name("users.")->group(function() {
-    Route::get("/", [UserController::class, 'index'])->name('index'); // 회원목록 (관리자 권한 필수)
 
     Route::get("/register", [UserController::class, 'create'])->name('create')->defaults('hideSide', true); // 회원가입 폼
     Route::post("/register", [UserController::class, 'register'])->name('register'); // 회원가입 처리
     Route::get("/login", [UserController::class, 'login'])->name('login')->defaults('hideSide', true); // 로그인 폼
     Route::post("/login", [UserController::class, 'authenticate'])->name('authenticate'); // 로그인 처리 
 
+    Route::get("/", [UserController::class, 'index'])->name('index'); // 회원목록 (관리자 권한 필수)
     Route::get("/{idx}", [UserController::class, 'show'])->name('show');
     Route::get("/{idx}/edit", [UserController::class, 'edit'])->name("edit");
     Route::put("/{idx}", [UserController::class, 'update'])->name('update');

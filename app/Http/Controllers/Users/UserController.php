@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Users\UserService;
 use Illuminate\Http\Request;
-use App\Models\User;
-
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    private UserService $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * 회원가입 목록 (관리자)
      *
@@ -43,7 +48,7 @@ class UserController extends Controller
     }
 
     /**
-     * 회원가입 완료 처리 
+     * 회원가입 완료 처리
      *
      * @param Request $request
      * @return void
@@ -78,35 +83,21 @@ class UserController extends Controller
                 ->withInput();
         }
 
-        DB::transaction(function () use ($request) {
-            $userData = [
-                'email' => $request->input('email'),
-                'password' => Hash::make($request->input('password')),
-                'name' => $request->input('name'),
-                'nick_name' => $request->input('nick_name'),
-                'birth_date' => $request->input('birth_date'),
-                'sex' => $request->input('sex'),
-                'phone' => $request->input('phone'),
-                'address' => $request->input('address'),
-                'personal_info_agree' => $request->input('personal_info_agree'),
-                'level' => 'normal',
-                'ip' => $request->ip(),
-            ];
+        // 디비에 들어가는 값만 필터링 
+        $payload = $request->only([
+            'email',
+            'password',
+            'name',
+            'nick_name',
+            'birth_date',
+            'sex',
+            'phone',
+            'address',
+            'personal_info_agree',
+            'marketing_info_agree',
+        ]);
 
-            if ($request->filled('marketing_info_agree')) {
-                $userData['marketing_info_agree'] = $request->input('marketing_info_agree');
-            }
-
-            $user = User::create($userData);
-
-            Log::info('User register created', [
-                'action' => 'create',
-                'model' => 'User',
-                'user_idx' => $user->idx,
-                'email' => $user->email,
-                'ip' => $request->ip(),
-            ]);
-        });
+        $this->userService->register($payload, $request->ip());
 
         return redirect('/users/login')
             ->with('status', '회원가입 인증메일이 발송되었습니다. 인증을 진행해주세요.');
@@ -123,7 +114,7 @@ class UserController extends Controller
     }
 
     /**
-     * 로그인 완료 처리 
+     * 로그인 완료 처리
      *
      * @param Request $request
      * @return void
@@ -132,7 +123,6 @@ class UserController extends Controller
     {
         echo '로그인 폼';
     }
-
 
     /**
      * 수정 폼
@@ -146,7 +136,7 @@ class UserController extends Controller
     }
 
     /**
-     * 수정 처리 
+     * 수정 처리
      *
      * @param Request $reequest
      * @return void
