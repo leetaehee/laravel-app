@@ -24,11 +24,6 @@ Route::get('/', function () {
     return view('home');
 })->name('home')->defaults('hideSide', true);
 
-Route::get('/login', function() {
-    // 로그인
-    return view('users.login');
-})->name('login')->defaults('hideSide', true);
-
 //Route::get('/join', function() {
 //    // 회원가입 
 //    return view('users.join');
@@ -52,8 +47,8 @@ Route::prefix("users")->name("users.")->group(function() {
 
     Route::get("/register", [UserController::class, 'create'])->name('create')->defaults('hideSide', true); // 회원가입 폼
     Route::post("/register", [UserController::class, 'register'])->name('register'); // 회원가입 처리
-    Route::get("/login", [UserController::class, 'login'])->name('login'); // 로그인 폼
-    Route::post("/login", [UserController::class, 'authenticate'])->name('authenticate')->defaults('hideSide', true); // 로그인 처리 
+    Route::get("/login", [UserController::class, 'login'])->name('login')->defaults('hideSide', true); // 로그인 폼
+    Route::post("/login", [UserController::class, 'authenticate'])->name('authenticate'); // 로그인 처리 
 
     Route::get("/{idx}", [UserController::class, 'show'])->name('show');
     Route::get("/{idx}/edit", [UserController::class, 'edit'])->name("edit");

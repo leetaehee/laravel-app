@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('idx')->comment('PK');
             $table->string('user_id', 30)->comment('사용자 아이디');
             $table->string('name', 50)->comment('사용자명');
-            $table->unsignedBigInteger('create_user_idx')->comment('등록자');
+            $table->unsignedBigInteger('create_user_idx')->nullable()->comment('등록자 : 관리자에게 할 경우 idx 남기기');
             $table->unsignedBigInteger('update_user_idx')->nullable()->comment('수정자');
             $table->unsignedBigInteger('delete_user_idx')->nullable()->comment('삭제자');
             $table->dateTime('create_datetime')->comment('등록시각');

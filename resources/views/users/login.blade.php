@@ -9,6 +9,17 @@
                 <div class="border border-2 border-secondary-subtle rounded-4 bg-white p-4 p-md-5 shadow-sm" style="font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', var(--bs-font-sans-serif);">
                     <div class="text-center fs-2 fw-bold text-secondary mb-4" style="letter-spacing: 0.2em;">Welcome Login!</div>
 
+                    @if (session('status'))
+                        <div class="alert alert-info">{{ session('status') }}</div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="alert alert-warning d-flex align-items-center gap-2 small mb-4" role="alert">
+                            <span class="badge text-bg-warning text-dark">경고</span>
+                            <span>로그인 실패사유를 확인하세요.</span>
+                        </div>
+                    @endif
+
                     <form>
                         <div class="w-100">
                             <div class="mb-3">

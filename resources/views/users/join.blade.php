@@ -9,10 +9,12 @@
                 <div class="border border-2 border-secondary-subtle rounded-4 bg-white p-4 p-md-5 shadow-sm" style="font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', var(--bs-font-sans-serif);">
                     <div class="text-center fs-3 fw-bold text-secondary mb-4" style="letter-spacing: 0;">Welcome, new member!</div>
 
-                    <div class="alert alert-warning d-flex align-items-center gap-2 small mb-4" role="alert">
-                        <span class="badge text-bg-warning text-dark">경고</span>
-                        <span>회원가입 실패사유를 확인하세요.</span>
-                    </div>
+                    @if ($errors->any())
+                        <div class="alert alert-warning d-flex align-items-center gap-2 small mb-4" role="alert">
+                            <span class="badge text-bg-warning text-dark">경고</span>
+                            <span>회원가입 실패사유를 확인하세요.</span>
+                        </div>
+                    @endif
 
                     <form id="form_register" name="form_register" method="POST" action="{{ route('users.register') }}">
                         @csrf
@@ -23,13 +25,13 @@
                                     type="email"
                                     id="email"
                                     name="email"
-                                    class="form-control"
+                                    class="form-control @error('email') is-invalid @enderror"
                                     placeholder="example@email.com"
-                                    value=""
+                                    value="{{ old('email') }}"
                                 >
-                                <div class="invalid-feedback d-block small text-break">
-                                    이메일 주소를 입력해주세요.
-                                </div>
+                                @error('email')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -38,13 +40,13 @@
                                     type="password"
                                     id="password"
                                     name="password"
-                                    class="form-control"
-                                    placeholder="******"
+                                    class="form-control @error('password') is-invalid @enderror"
+                                    placeholder="비밀번호를 입력해주세요."
                                     value=""
                                 >
-                                <div class="invalid-feedback d-block small text-break">
-                                    비밀번호를 입력해주세요.
-                                </div>
+                                @error('password')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -53,13 +55,13 @@
                                     type="password"
                                     id="password_confirm"
                                     name="password_confirm"
-                                    class="form-control"
-                                    placeholder="******"
+                                    class="form-control @error('password_confirm') is-invalid @enderror"
+                                    placeholder="비밀번호를 한번 더 입력해주세요."
                                     value=""
                                 >
-                                <div class="invalid-feedback d-block small text-break">
-                                    비밀번호가 일치하지 않습니다.
-                                </div>
+                                @error('password_confirm')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -68,13 +70,13 @@
                                     type="text"
                                     id="name"
                                     name="name"
-                                    class="form-control"
+                                    class="form-control @error('name') is-invalid @enderror"
                                     placeholder="홍길동"
-                                    value=""
+                                    value="{{ old('name') }}"
                                 >
-                                <div class="invalid-feedback d-block small text-break">
-                                    이름을 입력해주세요.
-                                </div>
+                                @error('name')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -83,13 +85,13 @@
                                     type="text"
                                     id="nick_name"
                                     name="nick_name"
-                                    class="form-control"
+                                    class="form-control @error('nick_name') is-invalid @enderror"
                                     placeholder="닉네임을 입력해주세요"
-                                    value=""
+                                    value="{{ old('nick_name') }}"
                                 >
-                                <div class="invalid-feedback d-block small text-break">
-                                    닉네임을 입력해주세요.
-                                </div>
+                                @error('nick_name')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -102,14 +104,14 @@
                                         type="text"
                                         id="birth_date"
                                         name="birth_date"
-                                        class="form-control"
-                                        placeholder="1989-11-17"
-                                        value=""
+                                        class="form-control @error('birth_date') is-invalid @enderror"
+                                        placeholder="1990-01-01"
+                                        value="{{ old('birth_date') }}"
                                     >
                                 </div>
-                                <div class="invalid-feedback d-block small text-break">
-                                    생년월일을 입력해주세요.
-                                </div>
+                                @error('birth_date')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -120,8 +122,9 @@
                                             type="radio"
                                             id="sex_man"
                                             name="sex"
-                                            class="form-check-input"
+                                            class="form-check-input @error('sex') is-invalid @enderror"
                                             value="M"
+                                            @checked(old('sex') === 'M')
                                         >
                                         <label class="form-check-label" for="sex_man">남성</label>
                                     </div>
@@ -130,15 +133,16 @@
                                             type="radio"
                                             id="sex_woman"
                                             name="sex"
-                                            class="form-check-input"
+                                            class="form-check-input @error('sex') is-invalid @enderror"
                                             value="W"
+                                            @checked(old('sex') === 'W')
                                         >
                                         <label class="form-check-label" for="sex_woman">여성</label>
                                     </div>
                                 </div>
-                                <div class="invalid-feedback d-block small text-break">
-                                    성별을 선택해주세요.
-                                </div>
+                                @error('sex')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -147,15 +151,15 @@
                                     type="tel"
                                     id="phone"
                                     name="phone"
-                                    class="form-control"
+                                    class="form-control @error('phone') is-invalid @enderror"
                                     placeholder="01012345678"
                                     inputmode="numeric"
                                     pattern="[0-9]*"
-                                    value=""
+                                    value="{{ old('phone') }}"
                                 >
-                                <div class="invalid-feedback d-block small text-break">
-                                    핸드폰 번호를 입력해주세요.
-                                </div>
+                                @error('phone')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -164,13 +168,13 @@
                                     type="text"
                                     id="address"
                                     name="address"
-                                    class="form-control"
+                                    class="form-control @error('address') is-invalid @enderror"
                                     placeholder="서울특별시 강남구 테헤란로 123"
-                                    value=""
+                                    value="{{ old('address') }}"
                                 >
-                                <div class="invalid-feedback d-block small text-break">
-                                    주소를 입력해주세요.
-                                </div>
+                                @error('address')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -179,15 +183,15 @@
                                         type="checkbox"
                                         id="personal_info_agree"
                                         name="personal_info_agree"
-                                        class="form-check-input"
-                                        checked
+                                        class="form-check-input @error('personal_info_agree') is-invalid @enderror"
+                                        @checked(old('personal_info_agree'))
                                         value="Y"
                                     >
                                     <label class="form-check-label" for="personal_info_agree">개인정보동의(필수)</label>
                                 </div>
-                                <div class="invalid-feedback d-block small text-break">
-                                    개인정보 동의가 필요합니다.
-                                </div>
+                                @error('personal_info_agree')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-4">
@@ -198,12 +202,13 @@
                                         name="marketing_info_agree"
                                         class="form-check-input"
                                         value="Y"
+                                        @checked(old('marketing_info_agree'))
                                     >
                                     <label class="form-check-label" for="marketing_info_agree">마케팅동의</label>
                                 </div>
-                                <div class="invalid-feedback d-block small text-break">
-                                    마케팅 동의 여부를 선택해주세요.
-                                </div>
+                                @error('marketing_info_agree')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <button type="button" id="btn_join_completed" class="btn btn-dark border-0 w-100">회원가입 완료</button>

@@ -12,7 +12,6 @@ class Base extends Model
     protected $primaryKey = 'idx';
     public $incrementing = true;
     protected $keyType = 'int';
-
     public $timestamps = false;
 
     const CREATED_AT = 'create_datetime';
