@@ -29,10 +29,10 @@ Route::get('/login', function() {
     return view('users.login');
 })->name('login')->defaults('hideSide', true);
 
-Route::get('/join', function() {
-    // 회원가입 
-    return view('users.join');
-})->name('join')->defaults('hideSide', true);
+//Route::get('/join', function() {
+//    // 회원가입 
+//    return view('users.join');
+//})->name('join')->defaults('hideSide', true);
 
 // 대시보드 (향후 인덱스 페이지가 될 예정)
 Route::get('/dashboard', DashboardController::class);
@@ -48,10 +48,14 @@ Route::group([], function() {
 });
 
 Route::prefix("users")->name("users.")->group(function() {
-    Route::get("/", [UserController::class, 'index'])->name('index');
-    Route::get("/create", [UserController::class, 'create'])->name('create');
+    Route::get("/", [UserController::class, 'index'])->name('index'); // 회원목록 (관리자 권한 필수)
+
+    Route::get("/register", [UserController::class, 'create'])->name('create')->defaults('hideSide', true); // 회원가입 폼
+    Route::post("/register", [UserController::class, 'register'])->name('register'); // 회원가입 처리
+    Route::get("/login", [UserController::class, 'login'])->name('login'); // 로그인 폼
+    Route::post("/login", [UserController::class, 'authenticate'])->name('authenticate')->defaults('hideSide', true); // 로그인 처리 
+
     Route::get("/{idx}", [UserController::class, 'show'])->name('show');
-    Route::post("/", [UserController::class, 'store'])->name('store');
     Route::get("/{idx}/edit", [UserController::class, 'edit'])->name("edit");
     Route::put("/{idx}", [UserController::class, 'update'])->name('update');
     Route::patch("/{idx}/soft-delete", [UserController::class, 'destroy'])->name('destroy');

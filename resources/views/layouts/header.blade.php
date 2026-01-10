@@ -60,8 +60,8 @@
                 <i class="bi bi-box-arrow-in-right me-1" aria-hidden="true"></i>Start
                 </button>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right me-2" aria-hidden="true"></i>로그인</a></li>
-                <li><a class="dropdown-item" href="{{ route('join') }}"><i class="bi bi-person-plus me-2" aria-hidden="true"></i>회원가입</a></li>
+                <li><a class="dropdown-item" href="{{ route('users.login') }}"><i class="bi bi-box-arrow-in-right me-2" aria-hidden="true"></i>로그인</a></li>
+                <li><a class="dropdown-item" href="{{ route('users.create') }}"><i class="bi bi-person-plus me-2" aria-hidden="true"></i>회원가입</a></li>
                 </ul>
             </div>
 

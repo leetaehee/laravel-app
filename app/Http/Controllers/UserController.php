@@ -10,19 +10,17 @@ use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     /**
-     * 글 목록
+     * 회원가입 목록 (관리자)
      *
      * @return void
      */
     public function index()
     {
-        Log::debug("UserController insdex called");
-        
         return view('users.index');
     }
 
     /**
-     * 상세내역
+     * 회원정보 상세내역 (관리자)
      *
      * @return void
      */
@@ -32,31 +30,47 @@ class UserController extends Controller
     }
 
     /**
-     * 등록 폼
+     * 회원가입 폼
      *
      * @return void
      */
     public function create()
     {
-        return view('users.create');
+        return view('users.join');
     }
 
     /**
-     * 등록 처리 
+     * 회원가입 완료 처리 
      *
      * @param Request $request
      * @return void
      */
-    public function store(Request $request)
+    public function register(Request $request)
     {
-        User::create([
-            'user_id' => $request->post('user_id'),
-            'name' => $request->post('name'),
-            'create_user_idx' => 99
-        ]);
-
-        return redirect('/users');
+        echo '회원 가입 폼 ';
     }
+
+    /**
+     * 로그인 폼
+     *
+     * @return void
+     */
+    public function login()
+    {
+        return view('users.login');
+    }
+
+    /**
+     * 로그인 완료 처리 
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function authenticate(Request $request)
+    {
+        echo '로그인 폼';
+    }
+
 
     /**
      * 수정 폼
