@@ -21,6 +21,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
+    // 주석 할당한건 대량할당 제외이지만 히스토리 유지를 위해 기록
     protected $fillable = [
         'email',
         'name',
@@ -32,13 +33,13 @@ class User extends Authenticatable
         'address',
         'personal_info_agree',
         'marketing_info_agree',
-        'memo',
-        'level',
-        'ip',  
+        //'memo',
+        //'level',
+        //'ip',  
         'last_access_datetime',
-        'email_verify_token',
-        'email_verified_datetime',
-        'email_verify_exp_at',
+        //'email_verify_token',
+        //'email_verified_datetime',
+        //'email_verify_exp_at',
         'create_datetime',
         'create_user_idx',
         'update_datetime',

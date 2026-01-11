@@ -4,8 +4,8 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\Users\UserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +37,7 @@ Route::group([], function() {
         ->defaults('hideSide', true);
 });
 
+// 회원 라우팅
 Route::prefix("users")->name("users.")->group(function() {
 
     Route::get("/register", [UserController::class, 'create'])->name('create')->defaults('hideSide', true); // 회원가입 폼
@@ -51,6 +52,7 @@ Route::prefix("users")->name("users.")->group(function() {
     Route::patch("/{idx}/soft-delete", [UserController::class, 'destroy'])->name('destroy');
 });
 
+// 게시글 라우팅
 Route::prefix("posts")->name("posts.")->group(function() {
     Route::get("/", [PostController::class, 'index'])->name('index');
     Route::get("/create", [PostController::class, 'create'])->name('create');
@@ -61,6 +63,7 @@ Route::prefix("posts")->name("posts.")->group(function() {
     Route::patch("/{idx}/soft-delete", [PostController::class, 'destroy'])->name('destroy');
 });
 
+// 댓글 라우팅
 Route::prefix("comments")->name("comments.")->group(function() {
     Route::get("/", [CommentController::class, 'index'])->name('index');
     Route::get("/create", [CommentController::class, 'create'])->name('create');
@@ -108,3 +111,9 @@ Route::prefix('document')->name('document.')->group(function () {
 
 Route::post('/send', [ChatController::class, 'send']);
 Route::view('/chat', 'chat');
+
+//TestController
+// 라라벨 테스트 라우팅
+Route::prefix("tests")->name("test.")->group(function() {
+    Route::get("mail_queue", [TestController::class, 'mailQueue'])->name('mail_queue');
+});
