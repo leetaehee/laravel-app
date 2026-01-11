@@ -14,7 +14,6 @@ class UserRepository
      */
     public function create(array $data): User
     {
-        echo '왜안되지';
         return User::create($data);
     }
 }
