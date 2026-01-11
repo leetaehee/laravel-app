@@ -30,10 +30,12 @@ class UserService
             $user = $this->userRepository->create($payload);
 
             // 대량 할당 방지 (관리자 처리)
-            // 업데이트 처리되어서 update_datetime 변경됨
-            $user->level = 'normal';
-            $user->ip = $ip;
-            $user->save();
+            // 업데이트 처리되어서 update_datetime 변경되는거 방지 
+            // 정책에 따라 아래 구분을 서비스에서 해도 되고 레퍼지토리에서 묶어도됨 
+            $user->forceFill([
+                'level' => 'normal',
+                 'ip' => $ip
+            ])->saveQuietly();
 
             Log::info('User register created', [
                 'action' => 'create',
