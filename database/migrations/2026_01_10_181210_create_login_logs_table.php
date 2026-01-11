@@ -20,6 +20,11 @@ return new class extends Migration
             $table->string('user_agent', 512)->comment('접속 클라이언트의 User-Agent 정보(브라우저/OS 등)');
             $table->unsignedTinyInteger('success_flag')->comment('1: 로그인 성공 0: 로그인 실패');
 
+            $table->index('email');
+            $table->index('ip');
+            $table->index('access_datetime');
+            $table->index('access_user_idx');
+
             $table->comment('로그인 내역');
         });
     }

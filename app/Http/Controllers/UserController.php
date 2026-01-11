@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Users\UserService;
 use App\Http\Requests\Users\RegisterUserRequest;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -47,7 +46,7 @@ class UserController extends Controller
     }
 
     /**
-     * 회원가입 완료 처리
+     * 사용자 등록 처리 
      *
      * @param Request $request
      * @return void
