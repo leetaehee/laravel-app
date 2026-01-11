@@ -20,18 +20,29 @@
                         </div>
                     @endif
 
-                    <form>
+                    <form id="form_login" name="form_login" method="POST" action="{{ route('users.authenticate') }}">
+                        @csrf
                         <div class="w-100">
                             <div class="mb-3">
                                 <label class="form-label text-secondary fw-semibold small">Email</label>
-                                <input type="email" class="form-control" placeholder="developerkimtakgu@gmail.com">
+                                <input type="email" 
+                                       id="email" 
+                                       name="email" 
+                                       class="form-control" 
+                                       placeholder="exmapl@email.com"
+                                       value="">
                                 <div class="invalid-feedback d-block small text-break">
                                     이메일 주소가 중복됩니다.
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-secondary fw-semibold small">비밀번호</label>
-                                <input type="password" class="form-control is-invalid" placeholder="******">
+                                <input type="password" 
+                                       id="password"
+                                       name="password"
+                                       class="form-control is-invalid" 
+                                       placeholder="비밀번호를 입력해주세요."
+                                       value="">
                             </div>
                             <div class="invalid-feedback d-block small mb-3 text-break">
                                 비밀번호가 일치하지않습니다.
@@ -48,7 +59,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-dark border-0 w-100">로그인</button>
+                            <button type="button" id="btn_login" class="btn btn-dark border-0 w-100">로그인</button>
                         </div>
                     </form>
 
@@ -76,4 +87,14 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(function() {
+            $("#btn_login").on("click", function() {
+                $("#form_login").submit();
+            });
+        });
+    </script>
 @endsection

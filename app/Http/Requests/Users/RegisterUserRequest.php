@@ -32,7 +32,12 @@ class RegisterUserRequest extends FormRequest
             ],
             'password_confirm' => ['required', 'same:password'],
             'name' => ['required', 'min:2', 'max:8'],
-            'nick_name' => ['required', 'min:2', 'max:10'],
+            'nick_name' => [
+                'required', 
+                'min:2', 
+                'max:10',
+                'unique:users,nick_name',
+            ],
             'birth_date' => ['required', 'date_format:Y-m-d'],
             'sex' => ['required', 'in:M,W'],
             'phone' => [
