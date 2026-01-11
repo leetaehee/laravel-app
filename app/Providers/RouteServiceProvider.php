@@ -24,6 +24,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // 라우터 {idx}에는 숫자만 들어오도록 제한
+        Route::pattern('idx', '[0-9]+');
+        
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
