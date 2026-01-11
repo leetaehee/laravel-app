@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Users\RegisterUserRequest;
+use App\Http\Requests\Users\LoginUserRequest;
 use App\Services\EmailVerificationService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -83,9 +85,34 @@ class UserController extends Controller
      * @param Request $request
      * @return void
      */
-    public function authenticate(Request $request)
+    public function authenticate(LoginUserRequest $request)
     {
-        echo '로그인 폼';
+        $payload = $request->safe()->only(['email', 'password']);
+
+        $ok = $this->userService->authenticate($payload, $request->ip());
+
+        if (!$ok) {
+            return back()
+                ->with('status', '이메일 또는 비밀번호가 올바르지 않습니다.')
+                ->withInput();
+        }
+
+        return redirect('/dashboard');
+    }
+
+    /**
+     * 로그아웃 처리
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        Auth::logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect()->route('users.login');
     }
 
     /**

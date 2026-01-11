@@ -26,7 +26,9 @@ Route::get('/', function () {
 })->name('home')->defaults('hideSide', true);
 
 // 대시보드 (향후 인덱스 페이지가 될 예정)
-Route::get('/dashboard', DashboardController::class);
+Route::get('/dashboard', DashboardController::class)
+    ->middleware(['auth', 'email.verified'])
+    ->name('dashboard');
 
 // sidebar 없는 정적 페이지들
 Route::group([], function() {
@@ -43,6 +45,11 @@ Route::get('/email/verify', [
     EmailVerifyController::class,'verify'
     ])->name('email.verify');
 
+// 회원가입 인증 메일 재발송 (로그인상태)
+Route::post('/email/resend', [EmailVerifyController::class,'resend'])
+    ->middleware('auth')
+    ->name('email.resend');
+
 // 회원 라우팅
 Route::prefix("users")->name("users.")->group(function() {
 
@@ -50,6 +57,7 @@ Route::prefix("users")->name("users.")->group(function() {
     Route::post("/register", [UserController::class, 'register'])->name('register'); // 회원가입 처리
     Route::get("/login", [UserController::class, 'login'])->name('login')->defaults('hideSide', true); // 로그인 폼
     Route::post("/login", [UserController::class, 'authenticate'])->name('authenticate'); // 로그인 처리 
+    Route::get("/logout", [UserController::class, 'logout'])->name('logout'); // 로그아웃 처리
 
     Route::get("/", [UserController::class, 'index'])->name('index'); // 회원목록 (관리자 권한 필수)
     Route::get("/{idx}", [UserController::class, 'show'])->name('show');

@@ -16,4 +16,15 @@ class UserRepository
     {
         return User::create($data);
     }
+
+    /**
+     * 이메일로 사용자 조회
+     *
+     * @param string $email
+     * @return User|null
+     */
+    public function findByEmail(string $email): ?User
+    {
+        return User::where('email', $email)->first();
+    }
 }

@@ -25,27 +25,31 @@
                         <div class="w-100">
                             <div class="mb-3">
                                 <label class="form-label text-secondary fw-semibold small">Email</label>
-                                <input type="email" 
-                                       id="email" 
-                                       name="email" 
-                                       class="form-control" 
-                                       placeholder="exmapl@email.com"
-                                       value="">
-                                <div class="invalid-feedback d-block small text-break">
-                                    이메일 주소가 중복됩니다.
-                                </div>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    placeholder="example@email.com"
+                                    value="{{ old('email') }}"
+                                >
+                                @error('email')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-secondary fw-semibold small">비밀번호</label>
-                                <input type="password" 
-                                       id="password"
-                                       name="password"
-                                       class="form-control is-invalid" 
-                                       placeholder="비밀번호를 입력해주세요."
-                                       value="">
-                            </div>
-                            <div class="invalid-feedback d-block small mb-3 text-break">
-                                비밀번호가 일치하지않습니다.
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="form-control @error('password') is-invalid @enderror"
+                                    placeholder="비밀번호를 입력해주세요."
+                                    value=""
+                                >
+                                @error('password')
+                                    <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center my-3">
@@ -93,6 +97,19 @@
     <script>
         $(function() {
             $("#btn_login").on("click", function() {
+                /*
+                if ($.trim($('#email').val()) === '') {
+                    alert('이메일을 입력해주세요.');
+                    $('#email').focus();
+                    return;
+                }
+
+                if ($.trim($('#password').val()) === '') {
+                    alert('비밀번호를 입력해주세요.');
+                    $('#password').focus();
+                    return;
+                }
+                */
                 $("#form_login").submit();
             });
         });

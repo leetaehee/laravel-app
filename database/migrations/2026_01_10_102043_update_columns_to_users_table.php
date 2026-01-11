@@ -27,8 +27,8 @@ return new class extends Migration
             $table->text('memo')->after('marketing_info_agree')->nullable()->comment('관리자 메모용');
 
             $table->unique('email');
+            $table->unique('nick_name');
             $table->index('phone');
-            $table->index('nick_name');
             $table->index('name');
             $table->index('birth_date');
             $table->index('address');
@@ -42,8 +42,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropUnique(['email']);
-            $table->dropUnique(['phone']);
-            $table->dropIndex(['nick_name']);
+            $table->dropUnique(['nick_name']);
+            $table->dropIndex(['phone']);
             $table->dropIndex(['name']);
             $table->dropIndex(['birth_date']);
             $table->dropIndex(['address']);

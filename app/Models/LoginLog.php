@@ -19,9 +19,10 @@ class LoginLog extends Model
         'access_user_idx',
         'user_agent',
         'success_flag',
+        'login_provider',
     ];
 
     protected $casts = [
-		'access_datetime' =>'datetime',
+		  'access_datetime' =>'datetime',
     ];
 }

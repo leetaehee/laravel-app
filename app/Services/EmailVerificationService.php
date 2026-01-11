@@ -17,7 +17,7 @@ class EmailVerificationService
      * @param User $user
      * @return void
      */
-	public function issueAndSend(User $user,) : void {
+	public function issueAndSend(User $user) : void {
         // 6자리 숫자 추천(4자리 겹침 너무 많음)
 	    $token = (string)random_int(100000,999999);
 
@@ -39,22 +39,22 @@ class EmailVerificationService
 	    SendVerifyEmailJob::dispatch($user->idx);
     }
 
-    public function verify(int $idx, string $token, string $ip):bool {
+    public function verify(int $idx, string $token, string $ip): string {
         $user = User::findOrFail($idx);
 
         // 이미 인증됨
         if ($user->email_verify_datetime) {
-            return true;
+            return 'ok';
         }
         
         // 토큰 불일치
         if (!$user->email_verify_token || !hash_equals($user->email_verify_token, $token)) {
-            return false;
+            return 'invalid';
         }
     
         // 만료
-        if ($user->email_verify_exp_at &&now()->greaterThan($user->email_verify_exp_at)) {
-            return false;
+        if ($user->email_verify_exp_datetime && now()->greaterThan($user->email_verify_exp_datetime)) {
+            return 'expired';
         }
     
         // 성공 -> 인증 완료 시각 찍고 토큰/만료 제거
@@ -74,6 +74,6 @@ class EmailVerificationService
                 'receive_ip' => $ip,
             ]);
     
-        return true;
+        return 'ok';
     }
 }

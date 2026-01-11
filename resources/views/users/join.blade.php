@@ -59,6 +59,7 @@
                                     placeholder="비밀번호를 한번 더 입력해주세요."
                                     value=""
                                 >
+                                <div id="password_confirm_msg" class="form-text small text-danger"></div>
                                 @error('password_confirm')
                                     <div class="invalid-feedback d-block small text-break">{{ $message }}</div>
                                 @enderror
@@ -294,6 +295,26 @@
 
                 $("#form_register").submit();
             });
+
+            $('#password_confirm').on('input change', updatePasswordConfirmMsg);
+            $('#password').on('input change', updatePasswordConfirmMsg);
         });
+
+        function updatePasswordConfirmMsg() {
+            const password = $('#password').val();
+            const confirm = $('#password_confirm').val();
+            const $msg = $('#password_confirm_msg');
+
+            if (!confirm) {
+                $msg.text('');
+                return;
+            }
+
+            if (password !== confirm) {
+                $msg.text('비밀번호와 비밀번호 확인 값이 일치하지 않습니다.');
+            } else {
+                $msg.text('');
+            }
+        }
     </script>
 @endsection

@@ -2,10 +2,13 @@
 
 namespace App\Services;
 
+use App\Events\UserLoginAttemptedEvent;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -47,5 +50,57 @@ class UserService
 
             return $user;
         });
+    }
+
+    /**
+     * 로그인 처리
+     *
+     * @param array $payload
+     * @param string $ip
+     * @return bool
+     */
+    public function authenticate(array $payload, string $ip): bool
+    {
+        $user = $this->userRepository->findByEmail($payload['email']);
+        $userAgent = request()->userAgent() ?? '';
+
+        if (!$user || !Hash::check($payload['password'], $user->password)) {
+            event(new UserLoginAttemptedEvent(
+                email: $payload['email'],
+                accessUserIdx: $user?->idx,
+                ip: $ip,
+                userAgent: $userAgent,
+                success: false,
+                provider: 'local',
+                reason: 'invalid_credentials'
+            ));
+            return false;
+        }
+
+        Auth::login($user);
+
+        $user->forceFill([
+            'last_access_datetime' => now(),
+            'ip' => $ip,
+        ])->saveQuietly();
+
+        Log::info('User login succeeded', [
+            'action' => 'login',
+            'model' => 'User',
+            'user_idx' => $user->idx,
+            'email' => $user->email,
+            'ip' => $ip,
+        ]);
+
+        event(new UserLoginAttemptedEvent(
+            email: $user->email,
+            accessUserIdx: $user->idx,
+            ip: $ip,
+            userAgent: $userAgent,
+            success: true,
+            provider: 'local'
+        ));
+
+        return true;
     }
 }
