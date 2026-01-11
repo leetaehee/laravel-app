@@ -13,7 +13,8 @@ class UserRepository
      * @return User
      */
     public function create(array $data): User
-    {11
+    {
+        echo '왜안되지';
         return User::create($data);
     }
 }
