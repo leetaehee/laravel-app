@@ -13,7 +13,7 @@ class UserRepository
      * @return User
      */
     public function create(array $data): User
-    {
+    {11
         return User::create($data);
     }
 }
