@@ -21,6 +21,7 @@ class WriteLoginLogEventListener
         ]);
 
         if (!$event->success && $event->reason) {
+            // 실패 시 로그파일 남김 
             Log::info('User login failed reason', [
                 'email' => $event->email,
                 'ip' => $event->ip,
