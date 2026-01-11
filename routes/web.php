@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
@@ -36,6 +37,11 @@ Route::group([], function() {
         ->name('terms')
         ->defaults('hideSide', true);
 });
+
+// 회원 가입 인증 링크
+Route::get('/email/verify', [
+    EmailVerifyController::class,'verify'
+    ])->name('email.verify');
 
 // 회원 라우팅
 Route::prefix("users")->name("users.")->group(function() {

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('memo')->after('marketing_info_agree')->nullable()->comment('관리자 메모용');
 
             $table->unique('email');
-            $table->unique('phone');
+            $table->index('phone');
             $table->index('nick_name');
             $table->index('name');
             $table->index('birth_date');

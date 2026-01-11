@@ -39,7 +39,6 @@ class RegisterUserRequest extends FormRequest
                 'required',
                 'digits_between:10,11',
                 'regex:/^(010|011|016|017|018|019)\d{7,8}$/',
-                'unique:users,phone',
             ],
             'address' => ['required', 'min:5', 'max:30'],
             'personal_info_agree' => ['required', 'in:Y'],

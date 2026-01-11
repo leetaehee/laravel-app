@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('email_verify_token', 6)->nullable()->comment('이메일 인증시 발급되는 코드')->after('last_access_datetime');
-            $table->dateTime('email_verified_datetime')->nullable()->comment('회원이 메일 통해 승인 시각')->after('email_verify_token');
-            $table->dateTime('email_verify_exp_at')->nullable()->comment('코드 생성 후 완료해야 하는 시각')->after('email_verified_datetime');
+            $table->dateTime('email_verify_datetime')->nullable()->comment('회원이 메일 통해 승인 시각')->after('email_verify_token');
+            $table->dateTime('email_verify_exp_datetime')->nullable()->comment('코드 생성 후 완료해야 하는 시각')->after('email_verify_datetime');
         });
     }
 
@@ -26,8 +26,8 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn([
                 'email_verify_token',
-                'email_verified_datetime',
-                'email_verify_exp_at',
+                'email_verify_datetime',
+                'email_verify_exp_datetime',
             ]);
         });
     }
