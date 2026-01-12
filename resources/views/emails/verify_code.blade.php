@@ -1,5 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>이메일 인증 안내</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: #f5f7fb;
+                font-family: "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+                color: #1f2937;
+            }
+            .wrap {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 28px 16px 40px;
+            }
+            .card {
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 12px;
+                padding: 28px 24px;
+                box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+            }
+            .title {
+                font-size: 20px;
+                margin: 0 0 12px;
+                font-weight: 700;
+            }
+            .text {
+                font-size: 14px;
+                line-height: 1.6;
+                margin: 0 0 12px;
+            }
+            .token-box {
+                background: #f3f4f6;
+                border-radius: 10px;
+                padding: 16px;
+                text-align: center;
+                margin: 18px 0 22px;
+            }
+            .token-label {
+                font-size: 12px;
+                color: #6b7280;
+                margin-bottom: 6px;
+            }
+            .token {
+                font-size: 22px;
+                font-weight: 700;
+                letter-spacing: 0.22em;
+                color: #111827;
+            }
+            .btn {
+                display: inline-block;
+                background: #2563eb;
+                color: #ffffff !important;
+                text-decoration: none;
+                padding: 12px 18px;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 14px;
+            }
+            .hint {
+                font-size: 12px;
+                color: #6b7280;
+                margin: 16px 0 6px;
+            }
+            .link {
+                font-size: 12px;
+                word-break: break-all;
+                color: #2563eb;
+            }
+            .footer {
+                text-align: center;
+                font-size: 12px;
+                color: #6b7280;
+                margin-top: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="card">
+                <h1 class="title">이메일 인증 안내</h1>
+                <p class="text">
+                    안녕하세요, <strong>{{ $user->name }}</strong>님.
+                </p>
+                <p class="text">
+                    안전한 이용을 위해 {{ $user->email }} 주소로 인증번호를 보내드렸습니다.
+                    아래 코드를 확인하신 뒤 인증을 완료해 주세요.
+                </p>
 
-<p>이메일 인증 코드: <b>{{$token}}</b></p>
-<p>아래 링크를 클릭하면 인증됩니다.</p>
-<p><a href="{{ $verifyUrl }}">{{$verifyUrl }}</a></p>
-<p>※ 만료 시간이 지나면 재발송이 필요합니다.</p>
+                <div class="token-box">
+                    <div class="token-label">인증번호</div>
+                    <div class="token">{{ $token }}</div>
+                </div>
+
+                <div style="text-align: center;">
+                    <a class="btn" href="{{ $verifyUrl }}" target="_blank" rel="noopener">
+                        이메일 인증하기
+                    </a>
+                </div>
+
+                <p class="hint">
+                    버튼이 열리지 않으면 아래 링크를 복사해 브라우저에 붙여넣어 주세요.
+                </p>
+                <a class="link" href="{{ $verifyUrl }}">{{ $verifyUrl }}</a>
+            </div>
+
+            <div class="footer">
+                인증 요청을 하지 않으셨다면 이 메일을 무시해 주세요.
+            </div>
+        </div>
+    </body>
+</html>
+                  

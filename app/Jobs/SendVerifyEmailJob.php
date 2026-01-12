@@ -51,6 +51,7 @@ class SendVerifyEmailJob implements ShouldQueue
 
 			Mail::to($user->email)->send(
 				new VerifyEmailCodeMail(
+					user: $user,
 					token: $user->email_verify_token,
 					verifyUrl: $verifyUrl
 		    ));
