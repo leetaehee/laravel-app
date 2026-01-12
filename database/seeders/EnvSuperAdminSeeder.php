@@ -4,20 +4,21 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Exception;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class SuperAdminSeeder extends Seeder
+/**
+ * ENV 설정값 통해서 관리자 계정 만들기 (개발/로컬환경)
+ */
+class EnvSuperAdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $email = env('SUPERADMIN_EMAIL');
-        $plainPassword = env('SUPERADMIN_PASSWORD');
+        $email = env('SUPERADMIN_EMAIL', 'test99@test.com');
+        $plainPassword = env('SUPERADMIN_PASSWORD', '12345678!*V');
 
         // .env 값 없으면 에러로 멈추게 (안전)
         if (!$email || !$plainPassword) {
