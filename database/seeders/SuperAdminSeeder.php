@@ -1,0 +1,55 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Exception;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
+class SuperAdminSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $email = env('SUPERADMIN_EMAIL');
+        $plainPassword = env('SUPERADMIN_PASSWORD');
+
+        // .env 값 없으면 에러로 멈추게 (안전)
+        if (!$email || !$plainPassword) {
+            throw new Exception('SUPERADMIN_EMAIL / SUPERADMIN_PASSWORD 를 .env에 설정하세요.');
+        }
+
+	    // 비밀번호 규칙(너가 준 규칙) 체크
+		$regex = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/';
+		$len = Str::length($plainPassword);
+
+		if ($len < 8 || $len > 15 || !preg_match($regex, $plainPassword)) {
+			throw new Exception('SUPERADMIN_PASSWORD 규칙 위반: 8~15자, 대문자/소문자/숫자 포함');
+        }
+
+		// 이미 있으면 업데이트, 없으면 생성
+		User::updateOrCreate(
+            ['email' => $email],
+            [
+                'name' => '슈퍼어드민',
+                'password' => $plainPassword,
+                'nick_name' => '슈퍼관리자',
+                'birth_date' => '1990-01-01',
+                'sex' => 'M',
+                'phone' => '01012345678',
+                'address' => '경기도 안산시 단원구 시화호수로633',
+                'personal_info_agree' => 'Y',
+                'marketing_info_agree' => 'Y',
+                'level' => 'admin',
+                'ip' => '0.0.0.0',
+                'email_verify_datetime' => now(),
+                'create_datetime' => now(),
+            ]
+        );
+    }
+}
