@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * 대시보드 (로그인 후 이용 화면 )
+ */
 class DashboardController extends Controller
 {
     public function __invoke()
     {
-        echo '단일 액션 컨트롤러'; 
+        return view('dashboard');
     }
 }

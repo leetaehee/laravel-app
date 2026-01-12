@@ -28,7 +28,8 @@ Route::get('/', function () {
 // 대시보드 (향후 인덱스 페이지가 될 예정)
 Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth', 'email.verified'])
-    ->name('dashboard');
+    ->name('dashboard')
+    ->defaults('hideSide', true);
 
 // sidebar 없는 정적 페이지들
 Route::group([], function() {

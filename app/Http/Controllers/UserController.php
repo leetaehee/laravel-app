@@ -9,6 +9,9 @@ use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * 사용자 컨트롤러
+ */
 class UserController extends Controller
 {
     private UserService $userService;
