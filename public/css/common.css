@@ -15,6 +15,12 @@
         left: auto;
     }
 
+    .nav-dropdown > .dropdown-menu {
+        top: 100%;
+        left: 0;
+        margin-top: 0.125rem;
+    }
+
     .nav-dropdown:hover > .dropdown-menu {
         display: block;
     }

@@ -62,7 +62,7 @@ class RegisterUserRequest extends FormRequest
         ]);
 
         throw new HttpResponseException(
-            redirect('/users/register')->withErrors($validator)->withInput()
+            to_route('register')->withErrors($validator)->withInput()
         );
     }
 }

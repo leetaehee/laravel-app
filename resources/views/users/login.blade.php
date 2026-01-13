@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                    <form id="form_login" name="form_login" method="POST" action="{{ route('users.authenticate') }}">
+                    <form id="form_login" name="form_login" method="POST" action="{{ route('authenticate') }}">
                         @csrf
                         <div class="w-100">
                             <div class="mb-3">
@@ -58,7 +58,7 @@
                                     <label class="form-check-label" for="remember">자동로그인</label>
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
-                                    <a href="{{ route('users.register') }}" class="link-primary small text-decoration-none">회원가입</a>
+                                    <a href="{{ route('register') }}" class="link-primary small text-decoration-none">회원가입</a>
                                     <a href="#" class="link-primary small text-decoration-none">계정찾기</a>
                                 </div>
                             </div>

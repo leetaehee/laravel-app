@@ -43,7 +43,7 @@ class LoginUserRequest extends FormRequest
         ]);
 
         throw new HttpResponseException(
-            redirect('/users/login')->withErrors($validator)->withInput()
+            to_route('login')->withErrors($validator)->withInput()
         );
     }
 }

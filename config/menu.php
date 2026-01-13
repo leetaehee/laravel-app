@@ -82,6 +82,5 @@ return [
             'title' => '라라벨',
             'url'   => '/document/laravel',
         ],
-        
     ],
 ];

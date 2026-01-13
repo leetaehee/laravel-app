@@ -40,37 +40,45 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('blog.index') }}">정보관리</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('map.index') }}">장소관리</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('document.index') }}">문서관리</a></li>
+                @auth
                 <li class="nav-item dropdown nav-dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">테스트</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard') }}">대시보드</a></li>
+                        <li><a class="dropdown-item" href="{{ route('mypage.profile') }}">내정보변경</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/mypage/inquiries') }}">문의내역</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown nav-dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">테스트</a></li>
-                    </ul>
-                </li>
+                @endauth
+                @auth
+                    @if (auth()->user()?->level === 'admin')
+                    <li class="nav-item dropdown nav-dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">테스트</a></li>
+                        </ul>
+                    </li>
+                    @endif
+                @endauth
             </ul>
         
-            {{-- 로그인 --}}
+            @guest
             <div class="dropdown auth-dropdown">
                 <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center auth-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-box-arrow-in-right me-1" aria-hidden="true"></i>Start
                 </button>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('users.login') }}"><i class="bi bi-box-arrow-in-right me-2" aria-hidden="true"></i>로그인</a></li>
-                <li><a class="dropdown-item" href="{{ route('users.create') }}"><i class="bi bi-person-plus me-2" aria-hidden="true"></i>회원가입</a></li>
+                <li><a class="dropdown-item" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right me-2" aria-hidden="true"></i>로그인</a></li>
+                <li><a class="dropdown-item" href="{{ route('create') }}"><i class="bi bi-person-plus me-2" aria-hidden="true"></i>회원가입</a></li>
                 </ul>
             </div>
+            @endguest
 
-            {{-- 마이페이지 (로그인후) --}}
-            {{--
-            <button class="btn btn-outline-light d-flex align-items-center auth-btn" type="button">
-                <i class="bi bi-person-circle me-1" aria-hidden="true"></i>My Page
-            </button>
-            --}}
+            @auth
+            <a class="btn btn-outline-light d-flex align-items-center auth-btn" href="{{ route('logout') }}">
+                <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>로그아웃
+            </a>
+            @endauth
         </div>
     </div>
 </nav>

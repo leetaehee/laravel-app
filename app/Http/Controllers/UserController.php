@@ -7,7 +7,6 @@ use App\Http\Requests\Users\LoginUserRequest;
 use App\Services\EmailVerificationService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * 사용자 컨트롤러
@@ -42,84 +41,42 @@ class UserController extends Controller
     }
 
     /**
-     * 회원가입 폼
+     * 사용자 등록 화면 (관리자)
      *
      * @return void
      */
     public function create()
     {
-        return view('users.join');
+        return view('users.create');
     }
 
     /**
-     * 사용자 등록 처리 
+     * 사용자 등록 처리 (관리자)
      *
      * @param RegisterUserRequest $request
      * @param EmailVerificationService $evs
      * @return void
      */
-    public function register(RegisterUserRequest $request, EmailVerificationService $evs)
+    public function register()
     {
-        // 디비에 들어가는 값만 필터링 (패스워드만))
-        $payload = $request->safe()->except(['password_confirm']);
-
-        $user = $this->userService->register($payload, $request->ip());
-
-        // 이메일 인증 토큰 발급 및 메일 발송
-        $evs->issueAndSend($user);
-
-        return redirect('/users/login')
-            ->with('status', '회원가입 인증메일이 발송되었습니다. 인증을 진행해주세요.');
     }
 
     /**
-     * 로그인 폼
+     * 로그인한 유저가 사용하는 내 정보 변경
      *
      * @return void
      */
-    public function login()
+    public function profile() 
     {
-        return view('users.login');
+        // Auth::user, auth()->user()로 계정 체크 
+
+        echo "email = " . auth()->user()->email;
+
+        return view('users.profile');
     }
 
     /**
-     * 로그인 완료 처리
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function authenticate(LoginUserRequest $request)
-    {
-        $payload = $request->safe()->only(['email', 'password']);
-
-        $ok = $this->userService->authenticate($payload, $request->ip());
-
-        if (!$ok) {
-            return back()
-                ->with('status', '이메일 또는 비밀번호가 올바르지 않습니다.')
-                ->withInput();
-        }
-
-        return redirect('/dashboard');
-    }
-
-    /**
-     * 로그아웃 처리
-     *
-     * @return void
-     */
-    public function logout()
-    {
-        Auth::logout();
-
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
-
-        return redirect()->route('users.login');
-    }
-
-    /**
-     * 수정 폼
+     * 수정 폼 (관리자, 사용자)
      *
      * @param integer $idx
      * @return void
@@ -130,7 +87,7 @@ class UserController extends Controller
     }
 
     /**
-     * 수정 처리
+     * 수정 처리 (관리자, 사용자)
      *
      * @param Request $reequest
      * @return void
@@ -140,7 +97,7 @@ class UserController extends Controller
     }
 
     /**
-     * 삭제 (soft delete)
+     * 삭제 (관리자, 사용자)
      *
      * @param integer $idx
      * @return void

@@ -34,18 +34,16 @@ class EmailVerifyController extends Controller
 		if ($result === 'expired') {
             $user = User::findOrFail((int)$inputs['idx']);
             $evs->issueAndSend($user);
-			return redirect()
-                ->route('users.login')
+			return to_route('login')
                 ->with('status','토큰 만료로 인증메일을 재발송했습니다.');
         }
 
 		if ($result !== 'ok') {
-			return redirect()
-                ->route('users.login')
+			return to_route('login')
                 ->with('status','인증 실패(토큰 오류/만료)');
         }
 
-		return redirect()->route('users.login')->with('status', '인증 완료되었습니다. 로그인 해주세요.');
+		return to_route('login')->with('status', '인증 완료되었습니다. 로그인 해주세요.');
     }
 
     /**

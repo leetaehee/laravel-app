@@ -5,6 +5,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -25,12 +27,6 @@ Route::get('/', function () {
     return view('home');
 })->name('home')->defaults('hideSide', true);
 
-// 대시보드 (향후 인덱스 페이지가 될 예정)
-Route::get('/dashboard', DashboardController::class)
-    ->middleware(['auth', 'email.verified'])
-    ->name('dashboard')
-    ->defaults('hideSide', true);
-
 // sidebar 없는 정적 페이지들
 Route::group([], function() {
     Route::view('/privacy-policy', 'privacy')
@@ -40,6 +36,13 @@ Route::group([], function() {
         ->name('terms')
         ->defaults('hideSide', true);
 });
+
+// 회원가입 로그인 
+Route::get("/register", [RegisterController::class, 'create'])->name('create')->defaults('hideSide', true); // 회원가입 폼
+Route::post("/register", [RegisterController::class, 'register'])->name('register'); // 회원가입 처리
+Route::get("/login", [LoginController::class, 'login'])->name('login')->defaults('hideSide', true); // 로그인 폼
+Route::post("/login", [LoginController::class, 'authenticate'])->name('authenticate'); // 로그인 처리 
+Route::get("/logout", [LoginController::class, 'logout'])->name('logout'); // 로그아웃 처리
 
 // 회원 가입 인증 링크
 Route::get('/email/verify', [
@@ -51,18 +54,22 @@ Route::post('/email/resend', [EmailVerifyController::class,'resend'])
     ->middleware('auth')
     ->name('email.resend');
 
+// 로그인 후 보여야 하는 메뉴
+Route::middleware(['auth', 'email.verified'])->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard')->defaults('hideSide', true);; // 마이페이지 (로그인 후 진입페이지)   
+       
+    Route::prefix("mypage")->name("mypage.")->group(function() {
+        Route::get("/profile", [UserController::class, 'profile'])->name('profile')->defaults('hideSide', true);; // 로그인 후 보여지는 페이지  
+        Route::view('/inquiries', 'inquiries.index')->defaults('hideSide', true);; // 문의내역 (글쓰기, 상세, 목록 나올 경우 컨트롤러 생성)
+    });
+});
+
 // 회원 라우팅
+// 관리자, 사용자가 모두 접속해야 해서 컨트롤러에서 관리자, 로그인 여부 체크 
 Route::prefix("users")->name("users.")->group(function() {
-
-    Route::get("/register", [UserController::class, 'create'])->name('create')->defaults('hideSide', true); // 회원가입 폼
-    Route::post("/register", [UserController::class, 'register'])->name('register'); // 회원가입 처리
-    Route::get("/login", [UserController::class, 'login'])->name('login')->defaults('hideSide', true); // 로그인 폼
-    Route::post("/login", [UserController::class, 'authenticate'])->name('authenticate'); // 로그인 처리 
-    Route::get("/logout", [UserController::class, 'logout'])->name('logout'); // 로그아웃 처리
-
     Route::get("/", [UserController::class, 'index'])->name('index'); // 회원목록 (관리자 권한 필수)
     Route::get("/{idx}", [UserController::class, 'show'])->name('show');
-    Route::get("/{idx}/edit", [UserController::class, 'edit'])->name("edit");
+    Route::get("/{idx}/edit", [UserController::class, 'edit'])->name("edit"); // 관리자 전용 (컨트롤러 체크 필수)
     Route::put("/{idx}", [UserController::class, 'update'])->name('update');
     Route::patch("/{idx}/soft-delete", [UserController::class, 'destroy'])->name('destroy');
 });
