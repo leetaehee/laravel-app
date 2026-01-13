@@ -38,8 +38,8 @@ Route::group([], function() {
 });
 
 // 회원가입 로그인 
-Route::get("/register", [RegisterController::class, 'create'])->name('create'); // 회원가입 폼
-Route::post("/register", [RegisterController::class, 'register']); // 회원가입 처리
+Route::get("/register", [RegisterController::class, 'create'])->name('register.form'); // 회원가입 폼
+Route::post("/register", [RegisterController::class, 'register'])->name('register.submit'); // 회원가입 처리
 Route::get("/login", [LoginController::class, 'login'])->name('login'); // 로그인 폼
 Route::post("/login", [LoginController::class, 'authenticate'])->name('authenticate'); // 로그인 처리 
 Route::get("/logout", [LoginController::class, 'logout'])->name('logout'); // 로그아웃 처리

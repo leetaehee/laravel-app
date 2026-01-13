@@ -16,7 +16,7 @@
                         </div>
                     @endif
 
-                    <form id="form_register" name="form_register" method="POST" action="{{ route('register') }}">
+                    <form id="form_register" name="form_register" method="POST" action="{{ route('register.submit') }}">
                         @csrf
                         <div class="w-100">
                             <div class="mb-3">
