@@ -38,9 +38,9 @@ Route::group([], function() {
 });
 
 // 회원가입 로그인 
-Route::get("/register", [RegisterController::class, 'create'])->name('create')->defaults('hideSide', true); // 회원가입 폼
-Route::post("/register", [RegisterController::class, 'register'])->name('register'); // 회원가입 처리
-Route::get("/login", [LoginController::class, 'login'])->name('login')->defaults('hideSide', true); // 로그인 폼
+Route::get("/register", [RegisterController::class, 'create'])->name('create'); // 회원가입 폼
+Route::post("/register", [RegisterController::class, 'register']); // 회원가입 처리
+Route::get("/login", [LoginController::class, 'login'])->name('login'); // 로그인 폼
 Route::post("/login", [LoginController::class, 'authenticate'])->name('authenticate'); // 로그인 처리 
 Route::get("/logout", [LoginController::class, 'logout'])->name('logout'); // 로그아웃 처리
 
@@ -56,11 +56,11 @@ Route::post('/email/resend', [EmailVerifyController::class,'resend'])
 
 // 로그인 후 보여야 하는 메뉴
 Route::middleware(['auth', 'email.verified'])->group(function () {
-    Route::get('/dashboard', DashboardController::class)->name('dashboard')->defaults('hideSide', true);; // 마이페이지 (로그인 후 진입페이지)   
+    Route::get('/dashboard', DashboardController::class)->name('dashboard'); // 마이페이지 (로그인 후 진입페이지)   
        
     Route::prefix("mypage")->name("mypage.")->group(function() {
-        Route::get("/profile", [UserController::class, 'profile'])->name('profile')->defaults('hideSide', true);; // 로그인 후 보여지는 페이지  
-        Route::view('/inquiries', 'inquiries.index')->defaults('hideSide', true);; // 문의내역 (글쓰기, 상세, 목록 나올 경우 컨트롤러 생성)
+        Route::get("/profile", [UserController::class, 'profile'])->name('profile'); // 로그인 후 보여지는 페이지  
+        Route::view('/inquiries', 'inquiries.index'); // 문의내역 (글쓰기, 상세, 목록 나올 경우 컨트롤러 생성)
     });
 });
 
@@ -100,35 +100,35 @@ Route::prefix("comments")->name("comments.")->group(function() {
 Route::prefix('photo')->name('photo.')->group(function () {
     Route::get('/{slug?}', function ($slug = null) {
         return view('photo.index');
-    })->name('index');
+    })->name('index')->defaults('showSide', true);
 });
 
 // 영상 라우팅
 Route::prefix('video')->name('video.')->group(function () {
     Route::get('/{slug?}', function ($slug = null) {
         return view('video.index');
-    })->name('index');
+    })->name('index')->defaults('showSide', true);
 });
 
 // 정보 라우팅
 Route::prefix('blog')->name('blog.')->group(function () {
     Route::get('/{slug?}', function ($slug = null) {
         return view('blog.index');
-    })->name('index');
+    })->name('index')->defaults('showSide', true);
 });
 
 // 장소 라우팅
 Route::prefix('map')->name('map.')->group(function () {
     Route::get('/{slug?}', function ($slug = null) {
         return view('map.index');
-    })->name('index');
+    })->name('index')->defaults('showSide', true);
 });
 
-// 장소 라우팅
+// 문서 라우팅
 Route::prefix('document')->name('document.')->group(function () {
     Route::get('/{slug?}', function ($slug = null) {
         return view('document.index');
-    })->name('index');
+    })->name('index')->defaults('showSide', true);
 });
 
 Route::post('/send', [ChatController::class, 'send']);

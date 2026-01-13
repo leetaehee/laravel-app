@@ -29,11 +29,13 @@
         @include('layouts.header')
 
         {{-- 레이아웃 사이드바 (모바일) --}}
-        @include('layouts.side')
+        @if (request()->route('showSide'))
+            @include('layouts.side')
+        @endif
 
         <div class="container-fluid px-3 px-lg-4 py-4 flex-grow-1">
             <div class="row g-4">
-                @unless (request()->route('hideSide'))
+                @if (request()->route('showSide'))
                     <aside class="col-lg-2 sidebar-col d-none d-lg-block">
                         <div class="sidebar-panel text-white rounded-3 p-4 h-100">
                             <h6 class="text-uppercase text-secondary small">메뉴</h6>
@@ -44,7 +46,7 @@
                             </nav>
                         </div>
                     </aside>
-                @endunless
+                @endif
 
                 {{-- 본문 컨텐츠 --}}
                 @yield('content')

@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('layouts.*', function ($view) {
             $routeName = optional(request()->route())->getName();
-            $menus = config("menu", []);
+            $menus = config("note", []);
             $view->with('sideMenus', $menus[$routeName] ?? []);
         });
     }
