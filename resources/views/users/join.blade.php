@@ -12,7 +12,7 @@
                     @if ($errors->any())
                         <div class="alert alert-warning d-flex align-items-center gap-2 small mb-4" role="alert">
                             <span class="badge text-bg-warning text-dark">경고</span>
-                            <span>회원가입 실패사유를 확인하세요.11</span>
+                            <span>회원가입 실패사유를 확인하세요.</span>
                         </div>
                     @endif
 
