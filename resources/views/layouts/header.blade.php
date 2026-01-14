@@ -76,7 +76,7 @@
 
             @auth
             <a class="btn btn-outline-light d-flex align-items-center auth-btn" href="{{ route('logout') }}">
-                <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>로그아웃
+                <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>로그아웃11
             </a>
             @endauth
         </div>
