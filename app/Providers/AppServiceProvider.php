@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
+use App\Support\QueryLogger;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Route;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,12 +11,15 @@ class AppServiceProvider extends ServiceProvider
     {
     }
 
-    public function boot(): void
+    public function boot()
     {
-        View::composer('layouts.*', function ($view) {
-            $routeName = optional(request()->route())->getName();
-            $menus = config("note", []);
-            $view->with('sideMenus', $menus[$routeName] ?? []);
-        });
+        $isLocal = app()->isLocal();
+        if (!$isLocal) {
+            // 로컬 아닌 경우 실행안함
+            // 운영, 로컬 모두 하는 건 클래스를 만들고 app.php에 등록할 것 
+            return;
+        }
+
+        QueryLogger::boot();
     }
 }
