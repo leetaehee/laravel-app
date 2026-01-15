@@ -134,7 +134,7 @@ Route::prefix('document')->name('document.')->group(function () {
 Route::post('/send', [ChatController::class, 'send']);
 Route::view('/chat', 'chat');
 
-//TestController
+// TestController
 // 라라벨 테스트 라우팅
 Route::prefix("tests")->name("test.")->group(function() {
     Route::get("mail_queue", [TestController::class, 'mailQueue'])->name('mail_queue');
