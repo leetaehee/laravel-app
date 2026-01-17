@@ -2,11 +2,11 @@
 
 namespace App\Jobs;
 
-use App\Mail\VerifyEmailCodeMail;
-use App\Models\User;
+use App\Events\MailSentEvent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Mail\Mailable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 /**
- * 회원가입 이메일 인증 큐 작업
+ * 메일 발송 큐 작업
  */
-class SendVerifyEmailJob implements ShouldQueue
+class SendMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -24,7 +24,11 @@ class SendVerifyEmailJob implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct( 
-        public int $idx
+        public string $email,
+        public Mailable $mailable,
+        public string $kind,
+        public ?string $token = null,
+        public ?int $userIdx = null,
     ){}
 
     /**
@@ -34,33 +38,29 @@ class SendVerifyEmailJob implements ShouldQueue
      */
     public function handle():void
     {
-		$user = User::findOrFail($this->idx);
-		
-		$verifyUrl = route('email.verify', [
-			'idx' => $user->idx,
-			'token' => $user->email_verify_token,
-		]);
-		
 		try {
-			Log::info('Verify email send', [
+			Log::info('Mail send', [
 				'action' => 'send',
 				'model' => 'User',
-				'user_idx' => $user->idx,
-				'email' => $user->email,
+				'user_idx' => $this->userIdx,
+				'email' => $this->email,
 			]);
 
-			Mail::to($user->email)->send(
-				new VerifyEmailCodeMail(
-					user: $user,
-					token: $user->email_verify_token,
-					verifyUrl: $verifyUrl
-		    ));
+			Mail::to($this->email)->send($this->mailable);
+
+            event(new MailSentEvent(
+                kind: $this->kind,
+                email: $this->email,
+                token: $this->token,
+                sender: null,
+            ));
+
 		} catch (Throwable $e) {
-			Log::error('Verify email send failed', [
+			Log::error('Mail send failed', [
 				'action' => 'send_failed',
 				'model' => 'User',
-				'user_idx' => $user->idx,
-				'email' => $user->email,
+				'user_idx' => $this->userIdx,
+				'email' => $this->email,
 				'error' => $e->getMessage(),
 			]);
 			 throw $e;

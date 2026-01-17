@@ -41,16 +41,16 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('map.index') }}">장소관리</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('document.index') }}">문서관리</a></li>
                 @auth
-                <li class="nav-item dropdown nav-dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('dashboard') }}">대시보드</a></li>
-                        <li><a class="dropdown-item" href="{{ route('mypage.profile') }}">내정보변경</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/mypage/inquiries') }}">문의내역</a></li>
-                    </ul>
-                </li>
-                @endauth
-                @auth
+                    @if (auth()->user()?->email_verify_datetime)
+                    <li class="nav-item dropdown nav-dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">마이페이지</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('dashboard') }}">대시보드</a></li>
+                            <li><a class="dropdown-item" href="{{ route('mypage.profile') }}">내정보변경</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/mypage/inquiries') }}">문의내역</a></li>
+                        </ul>
+                    </li>
+
                     @if (auth()->user()?->level === 'admin')
                     <li class="nav-item dropdown nav-dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">관리자</a>
@@ -58,6 +58,7 @@
                             <li><a class="dropdown-item" href="#">테스트</a></li>
                         </ul>
                     </li>
+                    @endif
                     @endif
                 @endauth
             </ul>
@@ -75,9 +76,11 @@
             @endguest
 
             @auth
-            <a class="btn btn-outline-light d-flex align-items-center auth-btn" href="{{ route('logout') }}">
-                <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>로그아웃
-            </a>
+                @if (auth()->user()?->email_verify_datetime)
+                <a class="btn btn-outline-light d-flex align-items-center auth-btn" href="{{ route('logout') }}">
+                    <i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>로그아웃
+                </a>
+                @endif
             @endauth
         </div>
     </div>

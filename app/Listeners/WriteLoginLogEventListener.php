@@ -6,6 +6,9 @@ use App\Events\UserLoginAttemptedEvent;
 use App\Models\LoginLog;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * 로그인 접속 기록 
+ */
 class WriteLoginLogEventListener
 {
     public function handle(UserLoginAttemptedEvent $event): void

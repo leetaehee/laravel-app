@@ -212,6 +212,9 @@
                                 @enderror
                             </div>
 
+                            <div class="d-flex justify-content-end align-items-center mb-2">
+                                <a href="{{ route('login') }}" class="link-primary small text-decoration-none">로그인</a>
+                            </div>
                             <button type="button" id="btn_join_completed" class="btn btn-dark border-0 w-100">회원가입 완료</button>
                         </div>
                     </form>

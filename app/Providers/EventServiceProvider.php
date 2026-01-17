@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\MailSentEvent;
 use App\Events\UserLoginAttemptedEvent;
+use App\Listeners\WriteMailLogEventListener;
 use App\Listeners\WriteLoginLogEventListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserLoginAttemptedEvent::class => [
             WriteLoginLogEventListener::class,
+        ],
+        MailSentEvent::class => [
+            WriteMailLogEventListener::class,
         ],
     ];
 

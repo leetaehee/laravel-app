@@ -113,14 +113,17 @@ class UserService
      * @param string $ip
      * @return bool
      */
-    public function changePassword(User $user, string $password, string $ip): bool
+    public function changePassword(User $user, string $password, string $ip, array $payload = []): bool
     {
         try {
-            return DB::transaction(function () use ($user, $password, $ip) {
-                $user->forceFill([
-                    'password' => $password,
-                    'change_password_flag' => 0,
-                ])->save();
+            $data = array_merge([
+                'password' => $password,
+            ], $payload);
+
+            return DB::transaction(function () use ($user, $data, $ip) {
+                $data['password'] = $data['password'];
+
+                $user->forceFill($data)->save();
 
                 Log::info('Password change flag updated', [
                     'action' => 'update',

@@ -13,7 +13,7 @@
                     안녕하세요, <strong>{{ $user->name }}</strong>님.
                 </p>
                 <p style="font-size: 14px; line-height: 1.6; margin: 0 0 12px;">
-                    안전한 이용을 위해 {{ $user->email }} 주소로 인증번호를 보내드렸습니다.
+                    안전한 이용을 위해 <strong>{{ $user->email }}</strong> 주소로 인증번호를 보내드렸습니다.
                     아래 코드를 확인하신 뒤 인증을 완료해 주세요.
                 </p>
 

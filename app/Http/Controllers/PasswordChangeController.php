@@ -8,6 +8,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+/**
+ * 패스워드 초기화 
+ */
 class PasswordChangeController extends Controller
 {
     private UserService $userService;
@@ -17,11 +20,22 @@ class PasswordChangeController extends Controller
         $this->userService = $userService;
     }
 
+    /**
+     * 비밀번호 재설정 화면
+     *
+     * @return View
+     */
     public function index(): View
     {
-        return view('users.password-change');
+        return view('users.password_change');
     }
 
+    /**
+     * 비밀번호 재설정 처리 
+     *
+     * @param PasswordChangeRequest $request
+     * @return RedirectResponse
+     */
     public function requirePasswordReset(PasswordChangeRequest $request): RedirectResponse
     {
         $user = auth()->user();
@@ -32,7 +46,9 @@ class PasswordChangeController extends Controller
                 ->with('status', '로그인이 필요합니다.');
         }
 
-        $ok = $this->userService->changePassword($user, $request->password, $request->ip());
+        $ok = $this->userService->changePassword($user, $request->password, $request->ip(), [
+            'change_password_flag' => 0,
+        ]);
 
         if (!$ok) {
             return back()

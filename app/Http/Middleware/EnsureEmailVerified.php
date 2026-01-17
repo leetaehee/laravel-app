@@ -21,7 +21,7 @@ class EnsureEmailVerified
         $user = $request->user();
 
 		if (!$user ||is_null($user->email_verify_datetime)) {
-			return redirect()->route('users.login')->with('status','이메일 인증이 필요합니다.');
+			return redirect()->route('login')->with('status','이메일 인증이 필요합니다.');
         }
 
 		return $next($request);

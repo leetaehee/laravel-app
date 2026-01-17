@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Jobs\SendVerifyEmailJob;
-use App\Models\MailLog;
+use App\Events\MailSentEvent;
+use App\Jobs\SendMailJob;
+use App\Mail\VerifyEmailCodeMail;
 use App\Models\User;
 
 /**
@@ -23,20 +24,28 @@ class EmailVerificationService
 
 	    // fillable에 안 넣고 내부 로직으로만 갱신하려고 forceFill 사용
         // 업데이트 일자에 기록도면 안됨 
-	    $user->forceFill([
-		    'email_verify_token' => $token,
-		    'email_verify_exp_datetime' => now()->addMinutes(30),
+        $user->forceFill([
+            'email_verify_token' => $token,
+            'email_verify_exp_datetime' => now()->addMinutes(30),
         ])->saveQuietly();
 
-	    $log = MailLog::create([
-		    'kind' => '회원가입인증',
-            'email' => $user->email,
-            'token' => $token,
-            'send_datetime' => now(),
+        // 이메일 인증 발송 큐 작업 생성
+        $verifyUrl = route('email.verify', [
+            'idx' => $user->idx,
+            'token' => $user->email_verify_token,
         ]);
 
-        // 이메일 인증 발송 큐 작업 생성
-	    SendVerifyEmailJob::dispatch($user->idx);
+	    SendMailJob::dispatch(
+            $user->email,
+            new VerifyEmailCodeMail(
+                user: $user,
+                token: $user->email_verify_token,
+                verifyUrl: $verifyUrl
+            ),
+            '회원가입인증',
+            $user->email_verify_token,
+            $user->idx
+        );
     }
 
     public function verify(int $idx, string $token, string $ip): string {
@@ -65,14 +74,14 @@ class EmailVerificationService
         ])->saveQuietly();
     
         // 로그에 인증시각/IP 기록
-        MailLog::where('email',$user->email)
-              ->where('kind','회원가입인증')
-              ->where('token',$token)
-              ->first()
-              ?->update([
-                'receive_datetime' => now(),
-                'receive_ip' => $ip,
-            ]);
+        event(new MailSentEvent(
+            kind: '회원가입인증',
+            email: $user->email,
+            token: $token,
+            sender: null,
+            receiveIp: $ip,
+            receiveDatetime: now()->toDateTimeString(),
+        ));
     
         return 'ok';
     }

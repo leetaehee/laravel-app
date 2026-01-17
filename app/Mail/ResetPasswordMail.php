@@ -2,17 +2,17 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * 인증메일 발송용 Mailable 클래스
+ * 비밀번호 재설정 인증메일 Mailable 클래스
  */
-class VerifyEmailCodeMail extends Mailable
+class ResetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,9 +20,8 @@ class VerifyEmailCodeMail extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        public User $user,
-        public string $token,
-		public string $verifyUrl
+        public string $email,
+        public string $returnUrl
     ) {}
 
     /**
@@ -33,7 +32,7 @@ class VerifyEmailCodeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: sprintf('[%s] 이메일 인증 안내', config('app.name')),
+            subject: sprintf('[%s] 비밀번호 재설정 인증 안내', config('app.name')),
         );
     }
 
@@ -44,13 +43,12 @@ class VerifyEmailCodeMail extends Mailable
      */
     public function content(): Content
     {
-        // php8 생성자 이용하면 뷰에 데이터 안넘겨도 받을 수 있음 
+        // php8 생성자 이용하면 뷰에 with 안넘겨도 받을 수 있음
         return new Content(
-            view: 'emails.verify_code',
+            view: 'emails.reset_password',
             with: [
-                'user' => $this->user,
-                'token' => $this->token,
-                'verifyUrl' => $this->verifyUrl,
+                'email' => $this->email,
+                'returnUrl' => $this->returnUrl,
             ],
         );
     }
