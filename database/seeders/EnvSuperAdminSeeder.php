@@ -49,6 +49,7 @@ class EnvSuperAdminSeeder extends Seeder
                 'level' => 'admin',
                 'ip' => '0.0.0.0',
                 'email_verify_datetime' => now(),
+                'change_password_flag' => 0,
                 'create_datetime' => now(),
             ]
         );

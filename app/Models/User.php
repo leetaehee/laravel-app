@@ -40,6 +40,7 @@ class User extends Authenticatable
         //'email_verify_token',
         //'email_verified_datetime',
         //'email_verify_exp_at',
+        //'change_password_flag',
         'create_datetime',
         'create_user_idx',
         'update_datetime',

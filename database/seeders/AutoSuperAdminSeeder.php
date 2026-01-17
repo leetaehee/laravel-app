@@ -40,6 +40,7 @@ class AutoSuperAdminSeeder extends Seeder
                 'marketing_info_agree' => 'Y',
                 'level' => 'admin',
                 'ip' => '0.0.0.0',
+                'change_password_flag' => 1,
                 'email_verify_datetime' => now(),
                 'create_datetime' => now(),
             ]

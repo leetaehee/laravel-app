@@ -7,6 +7,7 @@ use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,15 @@ Route::get('/email/verify', [
 Route::post('/email/resend', [EmailVerifyController::class,'resend'])
     ->middleware('auth')
     ->name('email.resend');
+
+// 비밀번호를 변경을 해야만 하는 경우 
+Route::middleware('auth')->group(function () {
+    Route::get('/password/change', [PasswordChangeController::class,'index'])
+        ->name('password.change.form');
+        
+    Route::post('/password/change', [PasswordChangeController::class,'requirePasswordReset'])
+        ->name('password.change.update');
+});
 
 // 로그인 후 보여야 하는 메뉴
 Route::middleware(['auth', 'email.verified'])->group(function () {
