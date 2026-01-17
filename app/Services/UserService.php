@@ -107,20 +107,20 @@ class UserService
     }
 
     /**
-     * 비밀번호 변경 플래그 업데이트
+     * 비밀번호 변경
      *
      * @param User $user
      * @param string $ip
      * @return bool
      */
-    public function requirePasswordReset(User $user, string $password, string $ip): bool
+    public function changePassword(User $user, string $password, string $ip): bool
     {
         try {
             return DB::transaction(function () use ($user, $password, $ip) {
                 $user->forceFill([
                     'password' => $password,
                     'change_password_flag' => 0,
-                ])->saveQuietly();
+                ])->save();
 
                 Log::info('Password change flag updated', [
                     'action' => 'update',

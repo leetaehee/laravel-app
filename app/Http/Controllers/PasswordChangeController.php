@@ -32,7 +32,7 @@ class PasswordChangeController extends Controller
                 ->with('status', '로그인이 필요합니다.');
         }
 
-        $ok = $this->userService->requirePasswordReset($user, $request->password, $request->ip());
+        $ok = $this->userService->changePassword($user, $request->password, $request->ip());
 
         if (!$ok) {
             return back()
