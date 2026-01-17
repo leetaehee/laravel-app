@@ -37,6 +37,7 @@ class LoginController extends Controller
     public function authenticate(LoginUserRequest $request)
     {
         $payload = $request->safe()->only(['email', 'password']);
+        $payload['remember'] = $request->boolean('remember');
 
         $ok = $this->userService->authenticate($payload, $request->ip());
 

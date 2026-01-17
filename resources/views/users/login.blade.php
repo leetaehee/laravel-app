@@ -54,7 +54,12 @@
 
                             <div class="d-flex justify-content-between align-items-center my-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="remember">
+                                    <input 
+                                        type="checkbox" 
+                                        id="remember"
+                                        name="remember"
+                                        class="form-check-input"
+                                        value="1">
                                     <label class="form-check-label" for="remember">자동로그인</label>
                                 </div>
                                 <div class="d-flex align-items-center gap-2">

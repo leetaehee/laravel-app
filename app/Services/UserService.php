@@ -79,7 +79,8 @@ class UserService
             return false;
         }
 
-        Auth::login($user);
+        $remember = $payload['remember'] ?? false;
+        Auth::login($user, $remember);
 
         $user->forceFill([
             'last_access_datetime' => now(),
