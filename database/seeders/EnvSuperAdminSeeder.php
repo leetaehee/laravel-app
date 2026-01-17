@@ -41,7 +41,7 @@ class EnvSuperAdminSeeder extends Seeder
 				'name' => '슈퍼어드민',
 				'password' => $plainPassword,
 				'nick_name' => '슈퍼관리자',
-				'birth_date' => '1990-01-01',
+				'birth_date' => '1989-11-17',
 				'sex' => 'M',
 				'phone' => '01012345678',
 				'address' => '경기도 안산시 단원구 시화호수로633',
