@@ -21,7 +21,7 @@ return [
     ],
     'boolean' => ':attribute은(는) true/false여야 합니다.',
     'confirmed' => ':attribute 확인 값이 일치하지 않습니다.',
-    'current_password' => '비밀번호가 일치하지 않습니다.',
+    'current_password' => ':attribute가 일치하지 않습니다.',
     'date' => ':attribute은(는) 올바른 날짜가 아닙니다.',
     'date_equals' => ':attribute은(는) :date와(과) 동일한 날짜여야 합니다.',
     'date_format' => ':attribute은(는) :format 형식이어야 합니다.',
@@ -150,6 +150,7 @@ return [
 
     'attributes' => [
         'email' => '이메일',
+        'current_password' => '현재 비밀번호',
         'password' => '비밀번호',
         'password_confirm' => '비밀번호 확인',
         'name' => '이름',

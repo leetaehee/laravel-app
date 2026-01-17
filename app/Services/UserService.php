@@ -120,7 +120,7 @@ class UserService
                 $user->forceFill([
                     'password' => $password,
                     'change_password_flag' => 0,
-                ])->save();
+                ])->saveQuietly();
 
                 Log::info('Password change flag updated', [
                     'action' => 'update',

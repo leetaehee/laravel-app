@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Password Update')
+@section('title', '비밀번호 재설정')
 
 @section('content')
     <div class="col-12">
@@ -16,7 +16,7 @@
                     @if ($errors->any())
                         <div class="alert alert-warning d-flex align-items-center gap-2 small mb-4" role="alert">
                             <span class="badge text-bg-warning text-dark">경고</span>
-                            <span>입력값을 다시 확인해주세요.</span>
+                            <span>비밀번호 재설정 실패사유를 확인하세요.</span>
                         </div>
                     @endif
 

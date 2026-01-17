@@ -34,6 +34,6 @@ class ForcePasswordChange
         }
 
 		return to_route('password.change.form')
-				->with('error','비밀번호 변경이 필요합니다.');
+				->with('status','비밀번호 변경이 필요합니다.');
     }
 }

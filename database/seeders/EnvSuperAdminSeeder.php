@@ -33,25 +33,28 @@ class EnvSuperAdminSeeder extends Seeder
 			throw new Exception('SUPERADMIN_PASSWORD 규칙 위반: 8~15자, 대문자/소문자/숫자 포함');
         }
 
-		// 이미 있으면 업데이트, 없으면 생성
-		User::updateOrCreate(
-            ['email' => $email],
-            [
-                'name' => '슈퍼어드민',
-                'password' => $plainPassword,
-                'nick_name' => '슈퍼관리자',
-                'birth_date' => '1990-01-01',
-                'sex' => 'M',
-                'phone' => '01012345678',
-                'address' => '경기도 안산시 단원구 시화호수로633',
-                'personal_info_agree' => 'Y',
-                'marketing_info_agree' => 'Y',
-                'level' => 'admin',
-                'ip' => '0.0.0.0',
-                'email_verify_datetime' => now(),
-                'change_password_flag' => 0,
-                'create_datetime' => now(),
-            ]
-        );
+		// 이미 있으면 업데이트, 없으면 생성 (업데이트 시각 변경 방지)
+		User::withoutTimestamps(function () use ($email, $plainPassword): void {
+			$user = User::firstOrNew(['email' => $email]);
+
+			$user->fill([
+				'name' => '슈퍼어드민',
+				'password' => $plainPassword,
+				'nick_name' => '슈퍼관리자',
+				'birth_date' => '1990-01-01',
+				'sex' => 'M',
+				'phone' => '01012345678',
+				'address' => '경기도 안산시 단원구 시화호수로633',
+				'personal_info_agree' => 'Y',
+				'marketing_info_agree' => 'Y',
+				'level' => 'admin',
+				'ip' => '0.0.0.0',
+				'email_verify_datetime' => now(),
+				'change_password_flag' => 0,
+				'create_datetime' => now(),
+			]);
+
+			$user->saveQuietly();
+		});
     }
 }

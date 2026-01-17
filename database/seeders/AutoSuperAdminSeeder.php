@@ -26,9 +26,10 @@ class AutoSuperAdminSeeder extends Seeder
             rand(0, 9) .                     // 숫자 1
             Str::random(7);                  // 나머지
 
-        $user = User::updateOrCreate(
-            ['email' => $email],
-            [
+        User::withoutTimestamps(function () use ($email, $plainPassword): void {
+            $user = User::firstOrNew(['email' => $email]);
+
+            $user->fill([
                 'name' => '슈퍼어드민',
                 'password' => $plainPassword,
                 'nick_name' => '슈퍼관리자',
@@ -43,8 +44,10 @@ class AutoSuperAdminSeeder extends Seeder
                 'change_password_flag' => 1,
                 'email_verify_datetime' => now(),
                 'create_datetime' => now(),
-            ]
-        );
+            ]);
+
+            $user->saveQuietly();
+        });
 
         // 콘솔에만 출력됨 (DB/화면에 안 남음)
         if ($this->command) {
