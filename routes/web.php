@@ -55,7 +55,7 @@ Route::post('/email/resend', [EmailVerifyController::class,'resend'])
     ->middleware('auth')
     ->name('email.resend');
 
-// 비밀번호를 변경을 해야만 하는 경우 
+// 관리자 or 시더 생성 로그인 계정에 대한 비밀번호 재설정 
 Route::middleware('auth')->group(function () {
     Route::get('/password/change', [PasswordChangeController::class,'index'])
         ->name('password.change.form');
