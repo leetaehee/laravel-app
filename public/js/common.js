@@ -1,5 +1,9 @@
 $(function () {
 
+    $(document).on("contextmenu", function (e) {
+        e.preventDefault();
+    });
+
     const modalEl = document.getElementById('loadingModal');
     if (!modalEl || typeof bootstrap === 'undefined') {
         console.warn('[loading] modal or bootstrap missing', {
