@@ -2,7 +2,28 @@
 <html lang="ko">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <meta name="description" content="티에이치스터디그룹은 성장하는 개발자가 기록과 실험을 통해 실력을 확장하고, 서비스 운영과 수익화를 경험하는 개발자 성장 플랫폼입니다.">
+        <meta property="og:title" content="티에이치스터디그룹 - 개발자 성장 플랫폼">
+        <meta property="og:description" content="개발자의 기록, 실험, 운영, 수익화를 기반으로 성장하는 플랫폼">
+        <meta property="og:image" content="{{ asset('images/main_logo.png') }}">
+        <meta property="og:type" content="website">
+
+        {{-- Favicon --}}
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16-v2.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32-v2.png') }}">
+        <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('images/favicon-48-v2.png') }}">
+
+        {{-- Apple Touch --}}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon-v2.png') }}">
+
+        {{-- Android / PWA Icons --}}
+        <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/android-chrome-192-v2.png') }}">
+        <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('images/android-chrome-512-v2.png') }}">
+
+        {{-- PWA --}}
+        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
 
         {{-- 공통 및 외부 라이브러리 스크립트 --}}
         @include('partials.head-scripts')

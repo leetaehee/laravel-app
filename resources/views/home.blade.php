@@ -3,7 +3,11 @@
 @section('title', '홈')
 
 @section('style')
-  <style>
+<style>
+    body{
+        background: #0b1220;
+    }
+
     .home-landing{
         --bg: #0c1220;
         --bg2: #0f172a;
@@ -21,8 +25,16 @@
                     linear-gradient(180deg, var(--bg), var(--bg2));
         color: var(--text);
         border: 1px solid rgba(148,163,184,.22);
-        border-radius: 22px;
+        border-radius: 18px;
         padding: 8px 0;
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
+    @media (min-width: 992px){
+        .home-landing{
+            margin-left: -1.5rem;
+            margin-right: -1.5rem;
+        }
     }
 
       .home-landing a{ color: inherit; }
@@ -30,6 +42,12 @@
       .home-landing .section-pad{ padding: 72px 0; }
       .home-landing .anchor-offset{ scroll-margin-top: 96px; }
       .home-landing .fw-black{ font-weight: 800; }
+      .home-landing h1,
+      .home-landing h2,
+      .home-landing h3{
+          font-weight: 800;
+          letter-spacing: -.02em;
+      }
 
     .home-landing .btn-accent{
         background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -38,6 +56,19 @@
         font-weight: 700;
     }
     .home-landing .btn-accent:hover{ opacity: .95; color: #0b1220; }
+
+    .home-landing .btn-outline-dark,
+    .home-landing .btn-outline-secondary{
+        border-color: rgba(148,163,184,.5);
+        color: rgba(248,250,252,.95);
+        background: rgba(15, 23, 42, .35);
+    }
+    .home-landing .btn-outline-dark:hover,
+    .home-landing .btn-outline-secondary:hover{
+        border-color: rgba(148,163,184,.8);
+        color: rgba(248,250,252,1);
+        background: rgba(30, 41, 59, .6);
+    }
 
     .home-landing .soft-card{
         background: rgba(15, 23, 42, .65);
@@ -145,6 +176,62 @@
         touch-action: manipulation;
     }
     .home-landing #backToTop:hover{ background: rgba(15, 23, 42, .96); }
+
+    .home-landing .profile-image{
+        display: flex;
+        justify-content: center;
+        margin-top: 16px;
+    }
+    .home-landing .image-card{
+        display: block;
+        width: 100%;
+        padding: 18px;
+        border-radius: var(--cardRadius);
+        border: 1px solid rgba(148,163,184,.18);
+        background: rgba(15, 23, 42, .35);
+        box-shadow: 0 18px 40px rgba(2, 6, 23, .35);
+    }
+    .home-landing .profile-image img{
+        max-width: 320px;
+        max-height: 180px;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .home-landing .why-card{
+        background: rgba(15, 23, 42, .55);
+        border: 1px solid rgba(148,163,184,.22);
+        border-radius: var(--cardRadius);
+    }
+
+    .home-landing .reveal{
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity .6s ease, transform .6s ease;
+        will-change: opacity, transform;
+    }
+    .home-landing .reveal.is-visible{
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @media (max-width: 767.98px){
+        .home-landing{
+            padding: 0;
+        }
+        .home-landing .section-pad{
+            padding: 56px 0;
+        }
+        .home-landing .py-5{
+            padding: 32px 0 !important;
+        }
+        .home-landing .image-card{
+            padding: 14px;
+        }
+    }
 </style>
 @endsection
 
@@ -154,7 +241,7 @@
         <div id="topSentinel" style="position:absolute; top:0; left:0; width:1px; height:1px;"></div>
 
         <header id="top" class="section-pad">
-            <div class="container">
+            <div class="container reveal">
                 <div class="row align-items-center g-4">
                       <div class="col-lg-6">
                           <span class="kicker mb-3">Developer Growth Platform</span>
@@ -177,15 +264,23 @@
                           </div>
                       </div>
 
+                      {{--
                       <div class="col-lg-6">
                           <div class="img-ph lg">No Image</div>
+                      </div>
+                      --}}
+
+                      <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('images/main_logo.png') }}" 
+                             class="img-fluid" 
+                             style="max-width: 420px; width: 100%; height: auto;">
                       </div>
                   </div>
               </div>
           </header>
 
           <section id="about" class="section-pad anchor-offset">
-              <div class="container">
+              <div class="container reveal">
                   <div class="row g-4 align-items-center">
                       <div class="col-lg-6">
                           <span class="kicker mb-3">프로젝트 소개</span>
@@ -200,15 +295,23 @@
                           </p>
                       </div>
 
+                      {{--
                       <div class="col-lg-6">
                           <div class="img-ph soft-card flat">No Image</div>
+                      </div>
+                      --}}
+
+                      <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('images/intro_project_img.jpg') }}" 
+                             class="img-fluid" 
+                             style="max-width: 420px; width: 100%; height: auto;">
                       </div>
                   </div>
               </div>
           </section>
 
           <section id="highlights" class="section-pad anchor-offset">
-              <div class="container">
+              <div class="container reveal">
                   <div class="d-flex align-items-end justify-content-between flex-wrap gap-2 mb-4">
                       <div>
                           <span class="kicker mb-2">핵심 포인트</span>
@@ -262,7 +365,7 @@
           </section>
 
           <section class="py-5">
-              <div class="container">
+              <div class="container reveal">
                   <div class="soft-card p-4 p-lg-5">
                       <div class="row align-items-center g-3">
                           <div class="col-lg-8">
@@ -287,7 +390,7 @@
           </section>
 
           <section id="keywords" class="section-pad anchor-offset">
-              <div class="container">
+              <div class="container reveal">
                   <span class="kicker mb-2">키워드</span>
                   <h2 class="fw-bold mb-3">스택보다 방향성이 먼저 보이게</h2>
                   <p class="muted mb-4">개발자 성장 플랫폼의 핵심 키워드.</p>
@@ -308,29 +411,38 @@
           </section>
 
           <section class="section-pad">
-              <div class="container">
+              <div class="container reveal">
                   <div class="row g-4 align-items-center">
+                      {{--
                       <div class="col-lg-6">
-                          <div class="img-ph sm">No Image</div>
+                        <div class="img-ph sm">No Image</div>
+                      </div>
+                      --}}
+                      <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('images/extension_logo.png') }}" 
+                             class="img-fluid" 
+                             style="max-width: 420px; width: 100%; height: auto;">
                       </div>
                       <div class="col-lg-6">
                           <span class="kicker mb-2">Why</span>
-                          <h2 class="fw-bold mb-3">업무 밖에서 만드는 “내 기준의 개발”</h2>
-                          <p class="mb-3">
-                              시스템은 시간이 지나면 낡고, 실무는 늘 일정과 사람 사이에서 타협이 생긴다.
-                              그래서 일상에서 연구하고 정리하는 습관을 서비스로 확장했다.
-                          </p>
-                          <p class="mb-0 muted">
-                              AI를 도구로 쓰되, 설계와 판단은 사람이 한다는 원칙을 지킨다.
-                              진정성 있는 기록과 꾸준한 개선이 가장 강력한 경쟁력이 된다.
-                          </p>
+                          <div class="why-card p-4">
+                              <h2 class="fw-bold mb-3">업무 밖에서 만드는 “내 기준의 개발”</h2>
+                              <p class="mb-3">
+                                  시스템은 시간이 지나면 낡고, 실무는 늘 일정과 사람 사이에서 타협이 생긴다.
+                                  그래서 일상에서 연구하고 정리하는 습관을 서비스로 확장했다.
+                              </p>
+                              <p class="mb-0 muted">
+                                  AI를 도구로 쓰되, 설계와 판단은 사람이 한다는 원칙을 지킨다.
+                                  진정성 있는 기록과 꾸준한 개선이 가장 강력한 경쟁력이 된다.
+                              </p>
+                          </div>
                       </div>
                   </div>
               </div>
           </section>
 
           <section id="stats" class="section-pad anchor-offset">
-              <div class="container">
+              <div class="container reveal">
                   <span class="kicker mb-2">지표</span>
                   <h2 class="fw-bold mb-3">운영을 목표로 하는 프로젝트</h2>
                   <p class="muted mb-4">실제 운영 경험을 쌓기 위해 지표를 만들고 개선한다.</p>
@@ -369,7 +481,7 @@
           </section>
 
           <section id="profile" class="section-pad anchor-offset">
-              <div class="container">
+              <div class="container reveal">
                   <div class="row g-4">
                       <div class="col-lg-6">
                           <span class="kicker mb-2">Profile</span>
@@ -424,21 +536,30 @@
                           <div class="mt-4 soft-card p-4">
                               <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
                                   <div>
-                                      <div class="fw-bold">GitHub</div>
+                                      <div class="fw-bold"><i class="bi bi-github me-2"></i>GitHub</div>
                                       <div class="muted">소스는 GitHub에서 확인 가능.</div>
                                   </div>
                                   <a class="btn btn-accent" href="https://github.com/leetaehee/laravel-app" target="_blank" rel="noopener">Repository 열기</a>
                               </div>
                           </div>
 
+                          {{--
                           <div class="mt-3 img-ph sm">No Image</div>
+                          --}}
+
+                          <div class="profile-image">
+                              <div class="image-card">
+                                  <img src="{{ asset('images/intro_developer_history.jpg') }}" 
+                                       class="img-fluid">
+                              </div>
+                          </div>
                       </div>
                   </div>
               </div>
           </section>
 
         <section id="roadmap" class="section-pad anchor-offset">
-            <div class="container">
+            <div class="container reveal">
                   <span class="kicker mb-2">Roadmap</span>
                   <h2 class="fw-bold mb-3">지금-다음-그다음</h2>
                   <p class="muted mb-4">확장 가능한 방식으로, 천천히 단단하게.</p>
@@ -578,8 +699,8 @@
                   smoothScrollTo(y, 720);
             });
         });
-
-        (function enableWheelSmooth(){
+   
+        /*(function enableWheelSmooth(){
             let current = window.scrollY;
             let target = window.scrollY;
             let ticking = false;
@@ -620,6 +741,7 @@
                 }
             }, { passive: true });
         })();
+        */
 
         if (backToTopBtn && sentinel) {
             if ('IntersectionObserver' in window) {
@@ -642,6 +764,23 @@
             backToTopBtn.addEventListener('click', () => {
                 smoothScrollTo(0, 780);
             });
+        }
+
+        const revealTargets = document.querySelectorAll('.home-landing .reveal');
+        if (revealTargets.length) {
+            if ('IntersectionObserver' in window) {
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    });
+                }, { threshold: 0.12 });
+
+                revealTargets.forEach((el) => revealObserver.observe(el));
+            } else {
+                revealTargets.forEach((el) => el.classList.add('is-visible'));
+            }
         }
     })();
 </script>

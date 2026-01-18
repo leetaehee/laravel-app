@@ -1,0 +1,21 @@
+{
+    "name": "티에이치스터디그룹",
+    "short_name": "TH",
+    "description": "개발자 성장 플랫폼 · 티에이치스터디그룹",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#6200EA",
+    "theme_color": "#6200EA",
+    "icons": [
+      {
+        "src": "/images/android-chrome-192-v2.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/images/android-chrome-512-v2.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
