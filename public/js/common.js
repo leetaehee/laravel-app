@@ -17,7 +17,11 @@ $(function () {
     window.showLoading = function () {
         loadingModal.show();
     };
+    
     window.hideLoading = function () {
+        if (document.activeElement) {
+            document.activeElement.blur();
+        }
         loadingModal.hide();
     };
 
