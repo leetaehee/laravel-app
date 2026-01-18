@@ -102,7 +102,6 @@
     <script>
         $(function() {
             $("#btn_login").on("click", function() {
-                /*
                 if ($.trim($('#email').val()) === '') {
                     alert('이메일을 입력해주세요.');
                     $('#email').focus();
@@ -114,7 +113,7 @@
                     $('#password').focus();
                     return;
                 }
-                */
+                
                 $("#form_login").submit();
             });
         });
